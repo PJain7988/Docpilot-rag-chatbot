@@ -31,6 +31,8 @@ export const MyDocuments = () => {
 
     if (result) {
       fetchDocuments();
+    } else {
+      alert("Failed to upload document. Please ensure the backend is running and you have uploaded a valid file.");
     }
 
     if (fileInputRef.current) {
@@ -59,7 +61,7 @@ export const MyDocuments = () => {
   );
 
   return (
-    <div className="flex-1 flex flex-col h-full bg-slate-950 p-6 overflow-hidden">
+    <div className="flex-1 flex flex-col h-full bg-slate-950 p-6 overflow-y-auto md:overflow-hidden">
       <div className="flex flex-col md:flex-row md:items-center justify-between mb-8 gap-4">
         <div>
           <h1 className="text-2xl font-bold text-white mb-1">My Documents</h1>
@@ -96,8 +98,8 @@ export const MyDocuments = () => {
         </div>
       </div>
 
-      <div className="flex-1 bg-slate-900 border border-slate-800 rounded-xl overflow-x-auto flex flex-col">
-        <div className="min-w-[700px]">
+      <div className="flex-1 bg-slate-900 border border-slate-800 rounded-xl overflow-visible md:overflow-hidden flex flex-col">
+        <div className="min-w-[700px] flex flex-col h-full">
           <div className="grid grid-cols-12 gap-4 p-4 border-b border-slate-800 bg-slate-850/50 text-xs font-semibold text-slate-400 uppercase tracking-wider">
             <div className="col-span-5">Filename</div>
             <div className="col-span-2">Type</div>
@@ -129,8 +131,35 @@ export const MyDocuments = () => {
                       </span>
                     </div>
                     <div className="col-span-1 flex items-center justify-end gap-2 text-slate-500">
-                      <button className="p-1 hover:text-cyan-400 transition-colors"><Download size={16} /></button>
-                      <button className="p-1 hover:text-red-400 transition-colors"><Trash2 size={16} /></button>
+                      <button 
+                        onClick={() => {
+                          const content = `Mock download content for ${doc.filename}`;
+                          const blob = new Blob([content], { type: 'text/plain' });
+                          const url = URL.createObjectURL(blob);
+                          const a = document.createElement('a');
+                          a.href = url;
+                          a.download = doc.filename;
+                          document.body.appendChild(a);
+                          a.click();
+                          document.body.removeChild(a);
+                          URL.revokeObjectURL(url);
+                        }}
+                        className="p-1 hover:text-cyan-400 transition-colors"
+                        title="Download"
+                      >
+                        <Download size={16} />
+                      </button>
+                      <button 
+                        onClick={() => {
+                          if (confirm(`Are you sure you want to delete ${doc.filename}?`)) {
+                            setDocuments(docs => docs.filter(d => d.id !== doc.id));
+                          }
+                        }}
+                        className="p-1 hover:text-red-400 transition-colors"
+                        title="Delete"
+                      >
+                        <Trash2 size={16} />
+                      </button>
                     </div>
                   </div>
                 ))}
