@@ -36,6 +36,9 @@ export const SearchPanel = () => {
       type: 'PDF',
       date: '2023-08-05',
       tags: ['HR', 'Security']
+    }
+  ];
+
   const isDateInRange = (dateStr: string, range: string | null) => {
         if (!range) return true;
         const date = new Date(dateStr).getTime();
