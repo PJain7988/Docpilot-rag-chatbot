@@ -1,9 +1,9 @@
-import { 
-  LayoutDashboard, 
-  FileText, 
-  Search, 
-  Cpu, 
-  Users, 
+import {
+  LayoutDashboard,
+  FileText,
+  Search,
+  Cpu,
+  Users,
   Settings,
   LogOut,
   Globe
@@ -13,11 +13,9 @@ import { clsx } from 'clsx';
 interface SidebarProps {
   activeTab: string;
   setActiveTab: (tab: string) => void;
-  isOpen: boolean;
-  setIsOpen: (isOpen: boolean) => void;
 }
 
-export const Sidebar = ({ activeTab, setActiveTab, isOpen, setIsOpen }: SidebarProps) => {
+export const Sidebar = ({ activeTab, setActiveTab }: SidebarProps) => {
   const navItems = [
     { icon: LayoutDashboard, label: 'Dashboard' },
     { icon: FileText, label: 'My Documents' },
@@ -34,14 +32,11 @@ export const Sidebar = ({ activeTab, setActiveTab, isOpen, setIsOpen }: SidebarP
   ];
 
   return (
-    <div className={clsx(
-      "w-64 h-full bg-slate-900 border-r border-slate-800 flex flex-col pt-6 fixed md:relative z-50 transition-transform duration-300",
-      isOpen ? "translate-x-0" : "-translate-x-full md:translate-x-0"
-    )}>
+    <div className="w-64 h-full bg-slate-900 border-r border-slate-800 flex flex-col pt-6">
       <div className="px-6 mb-8 flex items-center gap-3">
         {/* Logo placeholder */}
         <div className="text-cyan-500 flex items-center">
-          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M2 22 12 2l10 20-10-4z"/></svg>
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M2 22 12 2l10 20-10-4z" /></svg>
         </div>
         <span className="text-xl font-bold tracking-wide text-white">DocPilot AI</span>
       </div>
@@ -55,8 +50,8 @@ export const Sidebar = ({ activeTab, setActiveTab, isOpen, setIsOpen }: SidebarP
               onClick={() => setActiveTab(item.label)}
               className={clsx(
                 "w-full flex items-center gap-3 px-3 py-2.5 rounded-lg transition-all duration-200",
-                isActive 
-                  ? "bg-panel-gradient border border-cyan-500/30 text-cyan-400 shadow-glow" 
+                isActive
+                  ? "bg-panel-gradient border border-cyan-500/30 text-cyan-400 shadow-glow"
                   : "text-slate-400 hover:text-slate-200 hover:bg-slate-800/50"
               )}
             >
@@ -89,8 +84,8 @@ export const Sidebar = ({ activeTab, setActiveTab, isOpen, setIsOpen }: SidebarP
       <div className="p-4 border-t border-slate-800 mt-auto">
         <div className="flex items-center gap-3 w-full px-2 py-2 hover:bg-slate-800 rounded-lg cursor-pointer transition-colors">
           <div className="w-8 h-8 rounded-full bg-slate-700 flex items-center justify-center overflow-hidden">
-             {/* Profile Pic Placeholder */}
-             <img src="https://i.pravatar.cc/150?u=sarah" alt="User" className="w-full h-full object-cover" />
+            {/* Profile Pic Placeholder */}
+            <img src="https://i.pravatar.cc/150?u=sarah" alt="User" className="w-full h-full object-cover" />
           </div>
           <div className="flex-1 text-left">
             <div className="text-sm font-medium text-white">Sarah J.</div>
