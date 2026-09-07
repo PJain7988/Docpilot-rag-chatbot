@@ -37,37 +37,37 @@ export const SearchPanel = () => {
       date: '2023-08-05',
       tags: ['HR', 'Security']
   const isDateInRange = (dateStr: string, range: string | null) => {
-    if (!range) return true;
-    const date = new Date(dateStr).getTime();
-    const now = new Date('2023-10-31').getTime(); // Using fixed reference date for mock data
-    const daysDiff = (now - date) / (1000 * 3600 * 24);
-    
-    if (range === 'Past Week') return daysDiff <= 7;
-    if (range === 'Past Month') return daysDiff <= 30;
-    if (range === 'Past Year') return daysDiff <= 365;
-    return true;
-  };
+        if (!range) return true;
+        const date = new Date(dateStr).getTime();
+        const now = new Date('2023-10-31').getTime(); // Using fixed reference date for mock data
+        const daysDiff = (now - date) / (1000 * 3600 * 24);
 
-  const filteredResults = mockResults.filter(result => {
-    const matchesQuery = query === '' || result.title.toLowerCase().includes(query.toLowerCase()) || result.snippet.toLowerCase().includes(query.toLowerCase());
-    const matchesType = !selectedType || result.type === selectedType;
-    const matchesTag = !selectedTag || result.tags.includes(selectedTag);
-    const matchesDate = isDateInRange(result.date, selectedDate);
-    return matchesQuery && matchesType && matchesTag && matchesDate;
-  }).sort((a, b) => {
-    if (sortBy === 'recent') {
-      return new Date(b.date).getTime() - new Date(a.date).getTime();
-    }
-    // Default 'relevant' sort by score
-    return b.score - a.score;
-  });
+        if (range === 'Past Week') return daysDiff <= 7;
+        if (range === 'Past Month') return daysDiff <= 30;
+        if (range === 'Past Year') return daysDiff <= 365;
+        return true;
+      };
 
-  return (
-    <div className="flex-1 flex flex-col h-full bg-slate-950 overflow-y-auto md:overflow-hidden relative">
-      {/* Decorative background blur */}
-      <div className="absolute top-[-10%] left-1/2 -translate-x-1/2 w-[800px] h-[400px] bg-cyan-500/10 rounded-full blur-[120px] pointer-events-none"></div>
+      const filteredResults = mockResults.filter(result => {
+        const matchesQuery = query === '' || result.title.toLowerCase().includes(query.toLowerCase()) || result.snippet.toLowerCase().includes(query.toLowerCase());
+        const matchesType = !selectedType || result.type === selectedType;
+        const matchesTag = !selectedTag || result.tags.includes(selectedTag);
+        const matchesDate = isDateInRange(result.date, selectedDate);
+        return matchesQuery && matchesType && matchesTag && matchesDate;
+      }).sort((a, b) => {
+        if (sortBy === 'recent') {
+          return new Date(b.date).getTime() - new Date(a.date).getTime();
+        }
+        // Default 'relevant' sort by score
+        return b.score - a.score;
+      });
 
-      <div className="p-8 pb-4 shrink-0 relative z-10 flex flex-col items-center border-b border-slate-800/50 bg-slate-950/80 backdrop-blur-sm">
+      return(
+    <div className = "flex-1 flex flex-col h-full bg-slate-950 overflow-y-auto md:overflow-hidden relative" >
+          {/* Decorative background blur */ }
+          < div className = "absolute top-[-10%] left-1/2 -translate-x-1/2 w-[800px] h-[400px] bg-cyan-500/10 rounded-full blur-[120px] pointer-events-none" ></div>
+
+      <div className="p-8 pb-4 shrink-0 relative z-20 flex flex-col items-center border-b border-slate-800/50 bg-slate-950/80 backdrop-blur-sm">
         <h1 className="text-3xl font-bold text-white mb-6">Semantic Search</h1>
         
         <div className="w-full max-w-3xl relative mb-6 group">
@@ -218,6 +218,6 @@ export const SearchPanel = () => {
           </div>
         </div>
       </div>
-    </div>
+    </div >
   );
 };
