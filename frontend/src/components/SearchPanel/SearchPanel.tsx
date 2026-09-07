@@ -3,6 +3,9 @@ import { Search, Filter, FileText, Calendar, Tag, ChevronDown, Clock, Star } fro
 
 export const SearchPanel = () => {
   const [query, setQuery] = useState('');
+  const [activeDropdown, setActiveDropdown] = useState<string | null>(null);
+  const [selectedType, setSelectedType] = useState<string | null>(null);
+  const [selectedTag, setSelectedTag] = useState<string | null>(null);
 
   const mockResults = [
     {
@@ -33,6 +36,13 @@ export const SearchPanel = () => {
       tags: ['HR', 'Security']
     }
   ];
+
+  const filteredResults = mockResults.filter(result => {
+    const matchesQuery = query === '' || result.title.toLowerCase().includes(query.toLowerCase()) || result.snippet.toLowerCase().includes(query.toLowerCase());
+    const matchesType = !selectedType || result.type === selectedType;
+    const matchesTag = !selectedTag || result.tags.includes(selectedTag);
+    return matchesQuery && matchesType && matchesTag;
+  });
 
   return (
     <div className="flex-1 flex flex-col h-full bg-slate-950 overflow-y-auto md:overflow-hidden relative">
@@ -65,22 +75,53 @@ export const SearchPanel = () => {
         {/* Filters */}
         <div className="w-full max-w-3xl flex flex-wrap items-center gap-3 text-sm">
           <span className="text-slate-500 flex items-center gap-1.5 font-medium"><Filter size={14} /> Filters:</span>
-          <button onClick={() => alert('Filter options coming soon!')} className="flex items-center gap-1.5 px-3 py-1.5 bg-slate-900 border border-slate-800 rounded-lg text-slate-300 hover:border-slate-600 hover:text-white transition-colors">
-            <FileText size={14} /> File Type <ChevronDown size={14} />
-          </button>
-          <button onClick={() => alert('Filter options coming soon!')} className="flex items-center gap-1.5 px-3 py-1.5 bg-slate-900 border border-slate-800 rounded-lg text-slate-300 hover:border-slate-600 hover:text-white transition-colors">
+          
+          {/* File Type Filter */}
+          <div className="relative">
+            <button 
+              onClick={() => setActiveDropdown(activeDropdown === 'type' ? null : 'type')} 
+              className={`flex items-center gap-1.5 px-3 py-1.5 bg-slate-900 border rounded-lg transition-colors ${selectedType ? 'border-cyan-500 text-cyan-400 shadow-[0_0_10px_rgba(6,182,212,0.2)]' : 'border-slate-800 text-slate-300 hover:border-slate-600 hover:text-white'}`}
+            >
+              <FileText size={14} /> {selectedType || 'File Type'} <ChevronDown size={14} />
+            </button>
+            {activeDropdown === 'type' && (
+              <div className="absolute top-full left-0 mt-2 w-32 bg-slate-800 border border-slate-700 rounded-lg shadow-xl overflow-hidden z-50">
+                <button onClick={() => { setSelectedType(null); setActiveDropdown(null); }} className="w-full text-left px-4 py-2 hover:bg-slate-700 text-slate-200">All Types</button>
+                <button onClick={() => { setSelectedType('PDF'); setActiveDropdown(null); }} className="w-full text-left px-4 py-2 hover:bg-slate-700 text-slate-200">PDF</button>
+                <button onClick={() => { setSelectedType('DOCX'); setActiveDropdown(null); }} className="w-full text-left px-4 py-2 hover:bg-slate-700 text-slate-200">DOCX</button>
+              </div>
+            )}
+          </div>
+
+          <button onClick={() => alert('Date range filtering coming soon!')} className="flex items-center gap-1.5 px-3 py-1.5 bg-slate-900 border border-slate-800 rounded-lg text-slate-300 hover:border-slate-600 hover:text-white transition-colors">
             <Calendar size={14} /> Date Range <ChevronDown size={14} />
           </button>
-          <button onClick={() => alert('Filter options coming soon!')} className="flex items-center gap-1.5 px-3 py-1.5 bg-slate-900 border border-slate-800 rounded-lg text-slate-300 hover:border-slate-600 hover:text-white transition-colors">
-            <Tag size={14} /> Tags <ChevronDown size={14} />
-          </button>
+
+          {/* Tags Filter */}
+          <div className="relative">
+            <button 
+              onClick={() => setActiveDropdown(activeDropdown === 'tag' ? null : 'tag')} 
+              className={`flex items-center gap-1.5 px-3 py-1.5 bg-slate-900 border rounded-lg transition-colors ${selectedTag ? 'border-cyan-500 text-cyan-400 shadow-[0_0_10px_rgba(6,182,212,0.2)]' : 'border-slate-800 text-slate-300 hover:border-slate-600 hover:text-white'}`}
+            >
+              <Tag size={14} /> {selectedTag || 'Tags'} <ChevronDown size={14} />
+            </button>
+            {activeDropdown === 'tag' && (
+              <div className="absolute top-full left-0 mt-2 w-40 bg-slate-800 border border-slate-700 rounded-lg shadow-xl overflow-hidden z-50">
+                <button onClick={() => { setSelectedTag(null); setActiveDropdown(null); }} className="w-full text-left px-4 py-2 hover:bg-slate-700 text-slate-200">All Tags</button>
+                <button onClick={() => { setSelectedTag('Security'); setActiveDropdown(null); }} className="w-full text-left px-4 py-2 hover:bg-slate-700 text-slate-200">Security</button>
+                <button onClick={() => { setSelectedTag('Compliance'); setActiveDropdown(null); }} className="w-full text-left px-4 py-2 hover:bg-slate-700 text-slate-200">Compliance</button>
+                <button onClick={() => { setSelectedTag('Migration'); setActiveDropdown(null); }} className="w-full text-left px-4 py-2 hover:bg-slate-700 text-slate-200">Migration</button>
+                <button onClick={() => { setSelectedTag('HR'); setActiveDropdown(null); }} className="w-full text-left px-4 py-2 hover:bg-slate-700 text-slate-200">HR</button>
+              </div>
+            )}
+          </div>
         </div>
       </div>
 
       <div className="flex-1 overflow-visible md:overflow-y-auto p-8 relative z-10">
         <div className="max-w-3xl mx-auto">
           <div className="flex items-center justify-between mb-6 text-sm text-slate-400">
-            <span>Showing {mockResults.length} results for "{query || 'security'}"</span>
+            <span>Showing {filteredResults.length} results for "{query || (selectedTag || 'all')}"</span>
             <div className="flex items-center gap-4">
               <span className="flex items-center gap-1.5 cursor-pointer hover:text-white"><Clock size={14} /> Recent</span>
               <span className="flex items-center gap-1.5 text-cyan-400 cursor-pointer"><Star size={14} /> Most Relevant</span>
@@ -88,37 +129,50 @@ export const SearchPanel = () => {
           </div>
 
           <div className="space-y-4">
-            {mockResults.map((result) => (
-              <div key={result.id} className="bg-slate-900/50 border border-slate-800 rounded-xl p-5 hover:bg-slate-850 hover:border-slate-700 transition-all duration-200 group cursor-pointer">
-                <div className="flex justify-between items-start mb-2">
-                  <h3 className="text-lg font-semibold text-slate-200 group-hover:text-cyan-400 transition-colors flex items-center gap-2">
-                    <FileText size={18} className="text-slate-500 group-hover:text-cyan-400" />
-                    {result.title}
-                  </h3>
-                  <div className="flex items-center gap-2">
-                    <span className="text-xs font-medium text-emerald-400 bg-emerald-400/10 px-2 py-1 rounded border border-emerald-400/20">
-                      {result.score}% Match
-                    </span>
-                  </div>
-                </div>
-                
-                <p className="text-sm text-slate-400 leading-relaxed mb-4 line-clamp-2">
-                  {result.snippet}
-                </p>
-                
-                <div className="flex items-center gap-4 text-xs">
-                  <span className="text-slate-500 flex items-center gap-1"><FileText size={12} /> {result.type}</span>
-                  <span className="text-slate-500 flex items-center gap-1"><Calendar size={12} /> {result.date}</span>
-                  <div className="flex gap-2">
-                    {result.tags.map(tag => (
-                      <span key={tag} className="text-slate-400 bg-slate-800 px-2 py-0.5 rounded flex items-center gap-1">
-                        <Tag size={10} /> {tag}
-                      </span>
-                    ))}
-                  </div>
-                </div>
+            {filteredResults.length === 0 ? (
+              <div className="text-center py-12 text-slate-500">
+                <Search size={48} className="mx-auto mb-4 opacity-50" />
+                <p>No results match your filters.</p>
+                <button 
+                  onClick={() => { setQuery(''); setSelectedType(null); setSelectedTag(null); }}
+                  className="mt-4 text-cyan-500 hover:text-cyan-400"
+                >
+                  Clear all filters
+                </button>
               </div>
-            ))}
+            ) : (
+              filteredResults.map((result) => (
+                <div key={result.id} className="bg-slate-900/50 border border-slate-800 rounded-xl p-5 hover:bg-slate-850 hover:border-slate-700 transition-all duration-200 group cursor-pointer">
+                  <div className="flex justify-between items-start mb-2">
+                    <h3 className="text-lg font-semibold text-slate-200 group-hover:text-cyan-400 transition-colors flex items-center gap-2">
+                      <FileText size={18} className="text-slate-500 group-hover:text-cyan-400" />
+                      {result.title}
+                    </h3>
+                    <div className="flex items-center gap-2">
+                      <span className="text-xs font-medium text-emerald-400 bg-emerald-400/10 px-2 py-1 rounded border border-emerald-400/20">
+                        {result.score}% Match
+                      </span>
+                    </div>
+                  </div>
+                  
+                  <p className="text-sm text-slate-400 leading-relaxed mb-4 line-clamp-2">
+                    {result.snippet}
+                  </p>
+                  
+                  <div className="flex items-center gap-4 text-xs">
+                    <span className="text-slate-500 flex items-center gap-1"><FileText size={12} /> {result.type}</span>
+                    <span className="text-slate-500 flex items-center gap-1"><Calendar size={12} /> {result.date}</span>
+                    <div className="flex gap-2">
+                      {result.tags.map(tag => (
+                        <span key={tag} className="text-slate-400 bg-slate-800 px-2 py-0.5 rounded flex items-center gap-1">
+                          <Tag size={10} /> {tag}
+                        </span>
+                      ))}
+                    </div>
+                  </div>
+                </div>
+              ))
+            )}
           </div>
         </div>
       </div>
