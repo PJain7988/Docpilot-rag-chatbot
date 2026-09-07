@@ -1,7 +1,9 @@
-import { Users, UserPlus, Shield, MoreVertical } from 'lucide-react';
+import { useState } from 'react';
+import { Users, UserPlus, Shield, MoreVertical, CheckCircle2, X } from 'lucide-react';
 import { clsx } from 'clsx';
 
 export const TeamsPanel = () => {
+  const [successMessage, setSuccessMessage] = useState<string | null>(null);
   const members = [
     { id: 1, name: 'Sarah Jenkins', email: 'sarah.j@company.com', role: 'Admin', status: 'Active', avatar: 'https://i.pravatar.cc/150?u=sarah' },
     { id: 2, name: 'David Chen', email: 'david.c@company.com', role: 'Editor', status: 'Active', avatar: 'https://i.pravatar.cc/150?u=david' },
@@ -10,7 +12,7 @@ export const TeamsPanel = () => {
   ];
 
   return (
-    <div className="flex-1 flex flex-col h-full bg-slate-950 p-8 overflow-hidden">
+    <div className="flex-1 flex flex-col h-full bg-slate-950 p-8 overflow-y-auto relative">
       <div className="flex flex-col md:flex-row md:items-center justify-between mb-10 gap-4">
         <div>
           <h1 className="text-3xl font-bold text-white mb-2 flex items-center gap-3">
@@ -19,7 +21,13 @@ export const TeamsPanel = () => {
           </h1>
           <p className="text-slate-400 text-sm">Manage workspace members and their access controls.</p>
         </div>
-        <button className="bg-cyan-600 hover:bg-cyan-500 text-white px-5 py-2.5 rounded-xl flex items-center gap-2 text-sm font-medium transition-colors shadow-glow w-full md:w-auto justify-center">
+        <button 
+          onClick={() => {
+            setSuccessMessage("Invite link generated and sent!");
+            setTimeout(() => setSuccessMessage(null), 3000);
+          }}
+          className="bg-cyan-600 hover:bg-cyan-500 text-white px-5 py-2.5 rounded-xl flex items-center gap-2 text-sm font-medium transition-colors shadow-glow w-full md:w-auto justify-center"
+        >
           <UserPlus size={18} />
           Invite Member
         </button>
@@ -71,7 +79,10 @@ export const TeamsPanel = () => {
               </div>
               
               <div className="col-span-1 flex items-center justify-end pr-2 text-slate-500">
-                <button className="p-1.5 hover:text-cyan-400 hover:bg-slate-800 rounded-md transition-all">
+                <button 
+                  onClick={() => alert(`Manage settings for ${member.name}`)}
+                  className="p-1.5 hover:text-cyan-400 hover:bg-slate-800 rounded-md transition-all"
+                >
                   <MoreVertical size={16} />
                 </button>
               </div>
@@ -80,6 +91,16 @@ export const TeamsPanel = () => {
           </div>
         </div>
       </div>
+      {/* Success Toast */}
+      {successMessage && (
+        <div className="fixed bottom-6 right-6 z-[200] bg-emerald-500/10 border border-emerald-500/50 text-emerald-400 px-6 py-4 rounded-xl shadow-[0_0_20px_rgba(16,185,129,0.2)] flex items-center gap-3 animate-in slide-in-from-bottom-5 fade-in duration-300">
+          <CheckCircle2 size={20} />
+          <span className="font-medium text-sm">{successMessage}</span>
+          <button onClick={() => setSuccessMessage(null)} className="ml-2 text-emerald-500/50 hover:text-emerald-400 transition-colors">
+            <X size={16} />
+          </button>
+        </div>
+      )}
     </div>
   );
 };

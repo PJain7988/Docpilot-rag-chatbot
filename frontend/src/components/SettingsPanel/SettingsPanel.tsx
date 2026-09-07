@@ -1,9 +1,10 @@
 import { useState } from 'react';
-import { Settings, Key, Database, Shield, Monitor, Save } from 'lucide-react';
+import { Settings, Key, Database, Shield, Monitor, Save, CheckCircle2, X } from 'lucide-react';
 import { clsx } from 'clsx';
 
 export const SettingsPanel = () => {
   const [activeMenu, setActiveMenu] = useState('LLM Providers');
+  const [successMessage, setSuccessMessage] = useState<string | null>(null);
   
   const menuItems = [
     { name: 'General', icon: Monitor },
@@ -13,7 +14,7 @@ export const SettingsPanel = () => {
   ];
 
   return (
-    <div className="flex-1 flex flex-col h-full bg-slate-950 overflow-hidden">
+    <div className="flex-1 flex flex-col h-full bg-slate-950 overflow-y-auto relative">
       <div className="p-8 pb-6 shrink-0 border-b border-slate-800">
         <h1 className="text-3xl font-bold text-white mb-2 flex items-center gap-3">
           <Settings className="text-cyan-500" size={32} />
@@ -118,7 +119,13 @@ export const SettingsPanel = () => {
                 </div>
 
                 <div className="flex justify-end pt-4">
-                  <button className="bg-cyan-600 hover:bg-cyan-500 text-white px-6 py-3 rounded-xl flex items-center gap-2 font-medium transition-colors shadow-glow">
+                  <button 
+                    onClick={() => {
+                      setSuccessMessage("Settings saved successfully!");
+                      setTimeout(() => setSuccessMessage(null), 3000);
+                    }}
+                    className="bg-cyan-600 hover:bg-cyan-500 text-white px-6 py-3 rounded-xl flex items-center gap-2 font-medium transition-colors shadow-glow"
+                  >
                     <Save size={18} />
                     Save Configuration
                   </button>
@@ -135,7 +142,20 @@ export const SettingsPanel = () => {
             
           </div>
         </div>
+          </div>
+        </div>
       </div>
+
+      {/* Success Toast */}
+      {successMessage && (
+        <div className="fixed bottom-6 right-6 z-[200] bg-emerald-500/10 border border-emerald-500/50 text-emerald-400 px-6 py-4 rounded-xl shadow-[0_0_20px_rgba(16,185,129,0.2)] flex items-center gap-3 animate-in slide-in-from-bottom-5 fade-in duration-300">
+          <CheckCircle2 size={20} />
+          <span className="font-medium text-sm">{successMessage}</span>
+          <button onClick={() => setSuccessMessage(null)} className="ml-2 text-emerald-500/50 hover:text-emerald-400 transition-colors">
+            <X size={16} />
+          </button>
+        </div>
+      )}
     </div>
   );
 };
