@@ -90,7 +90,7 @@ export const MyDocuments = () => {
           <button
             onClick={() => fileInputRef.current?.click()}
             disabled={isUploading}
-            className="bg-cyan-600 hover:bg-cyan-500 text-white px-4 py-2 rounded-lg flex items-center gap-2 text-sm font-medium transition-colors shadow-glow disabled:opacity-50"
+            className="bg-cyan-600 hover:bg-cyan-500 text-white px-4 py-2 rounded-lg flex items-center shrink-0 whitespace-nowrap gap-2 text-sm font-medium transition-colors shadow-glow disabled:opacity-50"
           >
             {isUploading ? <Loader2 size={16} className="animate-spin" /> : <UploadCloud size={16} />}
             Upload Document
