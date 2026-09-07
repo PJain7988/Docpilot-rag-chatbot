@@ -35,7 +35,7 @@ export const SearchPanel = () => {
   ];
 
   return (
-    <div className="flex-1 flex flex-col h-full bg-slate-950 overflow-hidden relative">
+    <div className="flex-1 flex flex-col h-full bg-slate-950 overflow-y-auto md:overflow-hidden relative">
       {/* Decorative background blur */}
       <div className="absolute top-[-10%] left-1/2 -translate-x-1/2 w-[800px] h-[400px] bg-cyan-500/10 rounded-full blur-[120px] pointer-events-none"></div>
 
@@ -53,7 +53,10 @@ export const SearchPanel = () => {
               onChange={(e) => setQuery(e.target.value)}
               className="flex-1 bg-transparent text-slate-200 py-3 px-2 outline-none text-lg placeholder:text-slate-500"
             />
-            <button className="bg-cyan-600 hover:bg-cyan-500 text-white px-6 py-2.5 rounded-xl font-medium transition-colors shadow-glow ml-2">
+            <button 
+              onClick={() => alert('Search functionality coming soon!')}
+              className="bg-cyan-600 hover:bg-cyan-500 text-white px-6 py-2.5 rounded-xl font-medium transition-colors shadow-glow ml-2"
+            >
               Search
             </button>
           </div>
@@ -62,19 +65,19 @@ export const SearchPanel = () => {
         {/* Filters */}
         <div className="w-full max-w-3xl flex flex-wrap items-center gap-3 text-sm">
           <span className="text-slate-500 flex items-center gap-1.5 font-medium"><Filter size={14} /> Filters:</span>
-          <button className="flex items-center gap-1.5 px-3 py-1.5 bg-slate-900 border border-slate-800 rounded-lg text-slate-300 hover:border-slate-600 hover:text-white transition-colors">
+          <button onClick={() => alert('Filter options coming soon!')} className="flex items-center gap-1.5 px-3 py-1.5 bg-slate-900 border border-slate-800 rounded-lg text-slate-300 hover:border-slate-600 hover:text-white transition-colors">
             <FileText size={14} /> File Type <ChevronDown size={14} />
           </button>
-          <button className="flex items-center gap-1.5 px-3 py-1.5 bg-slate-900 border border-slate-800 rounded-lg text-slate-300 hover:border-slate-600 hover:text-white transition-colors">
+          <button onClick={() => alert('Filter options coming soon!')} className="flex items-center gap-1.5 px-3 py-1.5 bg-slate-900 border border-slate-800 rounded-lg text-slate-300 hover:border-slate-600 hover:text-white transition-colors">
             <Calendar size={14} /> Date Range <ChevronDown size={14} />
           </button>
-          <button className="flex items-center gap-1.5 px-3 py-1.5 bg-slate-900 border border-slate-800 rounded-lg text-slate-300 hover:border-slate-600 hover:text-white transition-colors">
+          <button onClick={() => alert('Filter options coming soon!')} className="flex items-center gap-1.5 px-3 py-1.5 bg-slate-900 border border-slate-800 rounded-lg text-slate-300 hover:border-slate-600 hover:text-white transition-colors">
             <Tag size={14} /> Tags <ChevronDown size={14} />
           </button>
         </div>
       </div>
 
-      <div className="flex-1 overflow-y-auto p-8 relative z-10">
+      <div className="flex-1 overflow-visible md:overflow-y-auto p-8 relative z-10">
         <div className="max-w-3xl mx-auto">
           <div className="flex items-center justify-between mb-6 text-sm text-slate-400">
             <span>Showing {mockResults.length} results for "{query || 'security'}"</span>
