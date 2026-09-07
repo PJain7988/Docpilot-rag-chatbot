@@ -1,11 +1,12 @@
 import { useState } from 'react';
-import { Cpu, FileText, Bot, BarChart3, ChevronRight, Zap, Filter, Loader2, X, Play, Settings } from 'lucide-react';
+import { Cpu, FileText, Bot, BarChart3, ChevronRight, Zap, Filter, Loader2, X, Play, Settings, CheckCircle2 } from 'lucide-react';
 import { clsx } from 'clsx';
 
 export const AIToolsPanel = () => {
   const [activeFilter, setActiveFilter] = useState('All');
   const [launchingTool, setLaunchingTool] = useState<number | null>(null);
   const [selectedTool, setSelectedTool] = useState<any | null>(null);
+  const [successMessage, setSuccessMessage] = useState<string | null>(null);
 
   const handleLaunch = (toolId: number) => {
     if (launchingTool) return;
@@ -13,6 +14,8 @@ export const AIToolsPanel = () => {
     setTimeout(() => {
       setLaunchingTool(null);
       setSelectedTool(null);
+      setSuccessMessage('Workflow initialized successfully! It is now running in the background.');
+      setTimeout(() => setSuccessMessage(null), 4000);
     }, 2000);
   };
   const tools = [
@@ -199,6 +202,17 @@ export const AIToolsPanel = () => {
               </button>
             </div>
           </div>
+        </div>
+      )}
+
+      {/* Success Toast */}
+      {successMessage && (
+        <div className="fixed bottom-6 right-6 z-[200] bg-emerald-500/10 border border-emerald-500/50 text-emerald-400 px-6 py-4 rounded-xl shadow-[0_0_20px_rgba(16,185,129,0.2)] flex items-center gap-3 animate-in slide-in-from-bottom-5 fade-in duration-300">
+          <CheckCircle2 size={20} />
+          <span className="font-medium text-sm">{successMessage}</span>
+          <button onClick={() => setSuccessMessage(null)} className="ml-2 text-emerald-500/50 hover:text-emerald-400 transition-colors">
+            <X size={16} />
+          </button>
         </div>
       )}
     </div>
