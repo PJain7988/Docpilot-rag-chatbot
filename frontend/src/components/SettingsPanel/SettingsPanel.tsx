@@ -165,21 +165,23 @@ export const SettingsPanel = () => {
                       <label className="block text-xs font-semibold text-slate-500 dark:text-slate-400 uppercase tracking-wider mb-2">Platform Name</label>
                       <input type="text" defaultValue="DocPilot AI" className="w-full bg-slate-50 dark:bg-slate-950 border border-slate-300 dark:border-slate-700 text-slate-700 dark:text-slate-300 rounded-xl px-4 py-3 focus:border-cyan-500 focus:outline-none transition-colors" />
                     </div>
-                    <div className="flex items-center justify-between p-4 bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl">
+                    <div 
+                      onClick={toggleTheme}
+                      className="flex items-center justify-between p-4 bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl cursor-pointer hover:bg-slate-100 dark:hover:bg-slate-900 transition-colors group"
+                    >
                       <div>
-                        <div className="text-sm font-medium text-slate-900 dark:text-slate-200">Dark Mode</div>
-                        <div className="text-xs text-slate-500 dark:text-slate-400">Enforce dark mode for all users</div>
+                        <div className="text-sm font-medium text-slate-900 dark:text-slate-200 group-hover:text-cyan-600 dark:group-hover:text-cyan-400 transition-colors">App Theme</div>
+                        <div className="text-xs text-slate-500 dark:text-slate-400">Toggle between Light and Dark mode</div>
                       </div>
                       <div 
-                        onClick={toggleTheme}
                         className={clsx(
-                          "h-6 w-12 rounded-full relative cursor-pointer transition-colors duration-300",
+                          "h-6 w-12 rounded-full relative transition-colors duration-300",
                           theme === 'dark' ? "bg-cyan-600 shadow-[0_0_15px_rgba(6,182,212,0.5)]" : "bg-slate-300"
                         )}
                       >
                         <div className={clsx(
-                          "absolute top-1 w-4 h-4 bg-white rounded-full transition-all duration-300",
-                          theme === 'dark' ? "right-1" : "left-1"
+                          "absolute top-1 w-4 h-4 rounded-full bg-white transition-transform duration-300 shadow-sm",
+                          theme === 'dark' ? "right-1 translate-x-0" : "left-1 translate-x-0"
                         )}></div>
                       </div>
                     </div>
