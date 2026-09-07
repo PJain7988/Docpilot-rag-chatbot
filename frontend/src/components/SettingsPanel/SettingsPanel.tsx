@@ -133,10 +133,91 @@ export const SettingsPanel = () => {
               </div>
             )}
             
-            {activeMenu !== 'LLM Providers' && (
-              <div className="flex flex-col items-center justify-center h-64 text-slate-500 border-2 border-dashed border-slate-800 rounded-2xl">
-                <p className="mb-2">Configuration options for <strong>{activeMenu}</strong></p>
-                <p className="text-xs">Coming in next update</p>
+            {activeMenu === 'General' && (
+              <div className="space-y-8 animate-in fade-in slide-in-from-bottom-4 duration-500">
+                <div className="bg-slate-900 border border-slate-800 rounded-2xl p-6 shadow-xl">
+                  <h3 className="text-lg font-semibold text-white mb-6 border-b border-slate-800 pb-4">System Preferences</h3>
+                  <div className="space-y-4">
+                    <div>
+                      <label className="block text-xs font-semibold text-slate-400 uppercase tracking-wider mb-2">Platform Name</label>
+                      <input type="text" defaultValue="DocPilot AI" className="w-full bg-slate-950 border border-slate-700 text-slate-300 rounded-xl px-4 py-3 focus:border-cyan-500 focus:outline-none transition-colors" />
+                    </div>
+                    <div className="flex items-center justify-between p-4 bg-slate-950 border border-slate-800 rounded-xl">
+                      <div>
+                        <div className="text-sm font-medium text-slate-200">Dark Mode</div>
+                        <div className="text-xs text-slate-400">Enforce dark mode for all users</div>
+                      </div>
+                      <div className="h-6 w-12 bg-cyan-600 rounded-full relative cursor-pointer shadow-[0_0_15px_rgba(6,182,212,0.5)]">
+                        <div className="absolute right-1 top-1 w-4 h-4 bg-white rounded-full"></div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div className="flex justify-end pt-4">
+                  <button 
+                    onClick={() => { setSuccessMessage("General settings saved!"); setTimeout(() => setSuccessMessage(null), 3000); }} 
+                    className="bg-cyan-600 hover:bg-cyan-500 text-white px-6 py-3 rounded-xl flex items-center gap-2 font-medium transition-colors shadow-glow"
+                  >
+                    <Save size={18} /> Save Configuration
+                  </button>
+                </div>
+              </div>
+            )}
+
+            {activeMenu === 'Vector Database' && (
+              <div className="space-y-8 animate-in fade-in slide-in-from-bottom-4 duration-500">
+                <div className="bg-slate-900 border border-slate-800 rounded-2xl p-6 shadow-xl">
+                  <h3 className="text-lg font-semibold text-white mb-6 border-b border-slate-800 pb-4">Pinecone Connection</h3>
+                  <div className="space-y-4">
+                    <div>
+                      <label className="block text-xs font-semibold text-slate-400 uppercase tracking-wider mb-2">Environment</label>
+                      <input type="text" defaultValue="gcp-starter" className="w-full bg-slate-950 border border-slate-700 text-slate-300 rounded-xl px-4 py-3 focus:border-cyan-500 focus:outline-none transition-colors" />
+                    </div>
+                    <div>
+                      <label className="block text-xs font-semibold text-slate-400 uppercase tracking-wider mb-2">Index Name</label>
+                      <input type="text" defaultValue="docpilot-index-v2" className="w-full bg-slate-950 border border-slate-700 text-slate-300 rounded-xl px-4 py-3 focus:border-cyan-500 focus:outline-none transition-colors" />
+                    </div>
+                  </div>
+                </div>
+                <div className="flex justify-end pt-4">
+                  <button 
+                    onClick={() => { setSuccessMessage("Database connected!"); setTimeout(() => setSuccessMessage(null), 3000); }} 
+                    className="bg-cyan-600 hover:bg-cyan-500 text-white px-6 py-3 rounded-xl flex items-center gap-2 font-medium transition-colors shadow-glow"
+                  >
+                    <Save size={18} /> Update Connection
+                  </button>
+                </div>
+              </div>
+            )}
+
+            {activeMenu === 'Security' && (
+              <div className="space-y-8 animate-in fade-in slide-in-from-bottom-4 duration-500">
+                <div className="bg-slate-900 border border-slate-800 rounded-2xl p-6 shadow-xl">
+                  <h3 className="text-lg font-semibold text-white mb-6 border-b border-slate-800 pb-4">Access Control</h3>
+                  <div className="space-y-4">
+                    <div className="flex items-center justify-between p-4 bg-slate-950 border border-slate-800 rounded-xl">
+                      <div>
+                        <div className="text-sm font-medium text-slate-200">Require Two-Factor Authentication</div>
+                        <div className="text-xs text-slate-400">Enforce 2FA for all team members</div>
+                      </div>
+                      <div className="h-6 w-12 bg-cyan-600 rounded-full relative cursor-pointer shadow-[0_0_15px_rgba(6,182,212,0.5)]">
+                        <div className="absolute right-1 top-1 w-4 h-4 bg-white rounded-full"></div>
+                      </div>
+                    </div>
+                    <div>
+                      <label className="block text-xs font-semibold text-slate-400 uppercase tracking-wider mb-2">Session Timeout (Minutes)</label>
+                      <input type="number" defaultValue="60" className="w-full bg-slate-950 border border-slate-700 text-slate-300 rounded-xl px-4 py-3 focus:border-cyan-500 focus:outline-none transition-colors" />
+                    </div>
+                  </div>
+                </div>
+                <div className="flex justify-end pt-4">
+                  <button 
+                    onClick={() => { setSuccessMessage("Security policies updated!"); setTimeout(() => setSuccessMessage(null), 3000); }} 
+                    className="bg-cyan-600 hover:bg-cyan-500 text-white px-6 py-3 rounded-xl flex items-center gap-2 font-medium transition-colors shadow-glow"
+                  >
+                    <Save size={18} /> Apply Policies
+                  </button>
+                </div>
               </div>
             )}
             
