@@ -7,6 +7,8 @@ export const SettingsPanel = () => {
   const [successMessage, setSuccessMessage] = useState<string | null>(null);
   const [isDarkMode, setIsDarkMode] = useState(true);
   const [is2FA, setIs2FA] = useState(false);
+  const [isOpenAIEnabled, setIsOpenAIEnabled] = useState(true);
+  const [isGeminiEnabled, setIsGeminiEnabled] = useState(false);
   
   const menuItems = [
     { name: 'General', icon: Monitor },
@@ -61,9 +63,18 @@ export const SettingsPanel = () => {
                       <h3 className="text-lg font-semibold text-white">OpenAI Integration</h3>
                       <p className="text-xs text-slate-400 mt-1">Used for high-accuracy reasoning and generation tasks.</p>
                     </div>
-                    <div className="h-6 w-12 bg-cyan-600 rounded-full relative cursor-pointer shadow-[0_0_15px_rgba(6,182,212,0.5)]">
-                      <div className="absolute right-1 top-1 w-4 h-4 bg-white rounded-full"></div>
-                    </div>
+                      <div 
+                        onClick={() => setIsOpenAIEnabled(!isOpenAIEnabled)}
+                        className={clsx(
+                          "h-6 w-12 rounded-full relative cursor-pointer transition-colors duration-300",
+                          isOpenAIEnabled ? "bg-cyan-600 shadow-[0_0_15px_rgba(6,182,212,0.5)]" : "bg-slate-700"
+                        )}
+                      >
+                        <div className={clsx(
+                          "absolute top-1 w-4 h-4 bg-white rounded-full transition-all duration-300",
+                          isOpenAIEnabled ? "right-1" : "left-1"
+                        )}></div>
+                      </div>
                   </div>
                   
                   <div className="space-y-4">
@@ -103,9 +114,18 @@ export const SettingsPanel = () => {
                       <h3 className="text-lg font-semibold text-white">Google Gemini</h3>
                       <p className="text-xs text-slate-400 mt-1">Alternative provider for multimodal capabilities.</p>
                     </div>
-                    <div className="h-6 w-12 bg-slate-700 rounded-full relative cursor-pointer border border-slate-600">
-                      <div className="absolute left-1 top-1 w-4 h-4 bg-slate-400 rounded-full"></div>
-                    </div>
+                      <div 
+                        onClick={() => setIsGeminiEnabled(!isGeminiEnabled)}
+                        className={clsx(
+                          "h-6 w-12 rounded-full relative cursor-pointer transition-colors duration-300",
+                          isGeminiEnabled ? "bg-cyan-600 shadow-[0_0_15px_rgba(6,182,212,0.5)]" : "bg-slate-700"
+                        )}
+                      >
+                        <div className={clsx(
+                          "absolute top-1 w-4 h-4 rounded-full transition-all duration-300",
+                          isGeminiEnabled ? "right-1 bg-white" : "left-1 bg-slate-400"
+                        )}></div>
+                      </div>
                   </div>
                   <div className="space-y-4 pointer-events-none">
                     <div>
