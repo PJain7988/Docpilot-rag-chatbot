@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { Search, Filter, FileText, Calendar, Tag, ChevronDown, Clock, Star } from 'lucide-react';
 
+export const SearchPanel = () => {
   const [query, setQuery] = useState('');
   const [activeDropdown, setActiveDropdown] = useState<string | null>(null);
   const [selectedType, setSelectedType] = useState<string | null>(null);
