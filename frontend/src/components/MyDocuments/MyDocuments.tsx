@@ -138,7 +138,6 @@ export const MyDocuments = () => {
             )}
           </div>
         </div>
-        </div>
       </div>
     </div>
   );
