@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import { Search, Bell, ZoomIn, ZoomOut, Download, Share } from 'lucide-react';
 import { AreaChart, Area, ResponsiveContainer } from 'recharts';
 
@@ -22,8 +23,10 @@ const dummyData2 = [
 ];
 
 export const MainPanel = () => {
+  const [zoom, setZoom] = useState(1);
+
   return (
-    <div className="flex-1 flex flex-col h-full bg-slate-950 p-6 overflow-hidden">
+    <div className="flex-1 flex flex-col h-full bg-slate-950 p-6 overflow-y-auto md:overflow-hidden">
       
       {/* Top Navigation */}
       <div className="flex items-center justify-between mb-6">
@@ -39,7 +42,7 @@ export const MainPanel = () => {
       </div>
 
       {/* Main Content Area */}
-      <div className="flex-1 flex flex-col min-h-0 bg-slate-900 border border-slate-800 rounded-xl overflow-hidden shadow-2xl">
+      <div className="flex-1 flex flex-col min-h-0 bg-slate-900 border border-slate-800 rounded-xl overflow-visible md:overflow-hidden shadow-2xl">
         
         {/* Document Header */}
         <div className="p-5 border-b border-slate-800 flex flex-col shrink-0 bg-slate-850/50">
@@ -50,18 +53,21 @@ export const MainPanel = () => {
         </div>
 
         {/* Document Viewer (Placeholder Grid) */}
-        <div className="flex-1 p-6 overflow-y-auto relative bg-slate-950/50">
+        <div className="flex-1 p-6 overflow-visible md:overflow-y-auto relative bg-slate-950/50">
           {/* Toolbar */}
           <div className="absolute top-4 right-6 flex items-center gap-2 bg-slate-800/80 backdrop-blur border border-slate-700 p-1.5 rounded-lg z-10 text-slate-400">
-            <button className="p-1 hover:text-white hover:bg-slate-700 rounded transition-colors"><ZoomOut size={16} /></button>
-            <button className="p-1 hover:text-white hover:bg-slate-700 rounded transition-colors"><ZoomIn size={16} /></button>
-            <button className="p-1 hover:text-white hover:bg-slate-700 rounded transition-colors"><Download size={16} /></button>
-            <button className="p-1 hover:text-white hover:bg-slate-700 rounded transition-colors"><Share size={16} /></button>
+            <button onClick={() => setZoom(z => Math.max(z - 0.2, 0.5))} className="p-1 hover:text-white hover:bg-slate-700 rounded transition-colors"><ZoomOut size={16} /></button>
+            <button onClick={() => setZoom(z => Math.min(z + 0.2, 2))} className="p-1 hover:text-white hover:bg-slate-700 rounded transition-colors"><ZoomIn size={16} /></button>
+            <button onClick={() => alert('Download mockup clicked')} className="p-1 hover:text-white hover:bg-slate-700 rounded transition-colors"><Download size={16} /></button>
+            <button onClick={() => alert('Share mockup clicked')} className="p-1 hover:text-white hover:bg-slate-700 rounded transition-colors"><Share size={16} /></button>
           </div>
 
           <div className="text-xs text-slate-500 mb-4">Page 4 of 28</div>
           
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 max-w-4xl mx-auto opacity-90 hover:opacity-100 transition-opacity">
+          <div 
+            className="grid grid-cols-1 md:grid-cols-2 gap-4 max-w-4xl mx-auto opacity-90 hover:opacity-100 transition-transform origin-top duration-300"
+            style={{ transform: `scale(${zoom})` }}
+          >
             {/* Page 1 Mock */}
             <div className="bg-white rounded p-4 aspect-[1/1.4] shadow-sm flex flex-col">
                <div className="h-4 bg-slate-200 rounded w-3/4 mb-6"></div>
