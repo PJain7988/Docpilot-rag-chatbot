@@ -1,11 +1,12 @@
 import { useState } from 'react';
 import { Search, Filter, FileText, Calendar, Tag, ChevronDown, Clock, Star } from 'lucide-react';
 
-export const SearchPanel = () => {
   const [query, setQuery] = useState('');
   const [activeDropdown, setActiveDropdown] = useState<string | null>(null);
   const [selectedType, setSelectedType] = useState<string | null>(null);
   const [selectedTag, setSelectedTag] = useState<string | null>(null);
+  const [selectedDate, setSelectedDate] = useState<string | null>(null);
+  const [sortBy, setSortBy] = useState<'relevant' | 'recent'>('relevant');
 
   const mockResults = [
     {
@@ -34,14 +35,30 @@ export const SearchPanel = () => {
       type: 'PDF',
       date: '2023-08-05',
       tags: ['HR', 'Security']
-    }
-  ];
+  const isDateInRange = (dateStr: string, range: string | null) => {
+    if (!range) return true;
+    const date = new Date(dateStr).getTime();
+    const now = new Date('2023-10-31').getTime(); // Using fixed reference date for mock data
+    const daysDiff = (now - date) / (1000 * 3600 * 24);
+    
+    if (range === 'Past Week') return daysDiff <= 7;
+    if (range === 'Past Month') return daysDiff <= 30;
+    if (range === 'Past Year') return daysDiff <= 365;
+    return true;
+  };
 
   const filteredResults = mockResults.filter(result => {
     const matchesQuery = query === '' || result.title.toLowerCase().includes(query.toLowerCase()) || result.snippet.toLowerCase().includes(query.toLowerCase());
     const matchesType = !selectedType || result.type === selectedType;
     const matchesTag = !selectedTag || result.tags.includes(selectedTag);
-    return matchesQuery && matchesType && matchesTag;
+    const matchesDate = isDateInRange(result.date, selectedDate);
+    return matchesQuery && matchesType && matchesTag && matchesDate;
+  }).sort((a, b) => {
+    if (sortBy === 'recent') {
+      return new Date(b.date).getTime() - new Date(a.date).getTime();
+    }
+    // Default 'relevant' sort by score
+    return b.score - a.score;
   });
 
   return (
@@ -93,9 +110,23 @@ export const SearchPanel = () => {
             )}
           </div>
 
-          <button onClick={() => alert('Date range filtering coming soon!')} className="flex items-center gap-1.5 px-3 py-1.5 bg-slate-900 border border-slate-800 rounded-lg text-slate-300 hover:border-slate-600 hover:text-white transition-colors">
-            <Calendar size={14} /> Date Range <ChevronDown size={14} />
-          </button>
+          {/* Date Range Filter */}
+          <div className="relative">
+            <button 
+              onClick={() => setActiveDropdown(activeDropdown === 'date' ? null : 'date')} 
+              className={`flex items-center gap-1.5 px-3 py-1.5 bg-slate-900 border rounded-lg transition-colors ${selectedDate ? 'border-cyan-500 text-cyan-400 shadow-[0_0_10px_rgba(6,182,212,0.2)]' : 'border-slate-800 text-slate-300 hover:border-slate-600 hover:text-white'}`}
+            >
+              <Calendar size={14} /> {selectedDate || 'Date Range'} <ChevronDown size={14} />
+            </button>
+            {activeDropdown === 'date' && (
+              <div className="absolute top-full left-0 mt-2 w-40 bg-slate-800 border border-slate-700 rounded-lg shadow-xl overflow-hidden z-50">
+                <button onClick={() => { setSelectedDate(null); setActiveDropdown(null); }} className="w-full text-left px-4 py-2 hover:bg-slate-700 text-slate-200">All Time</button>
+                <button onClick={() => { setSelectedDate('Past Week'); setActiveDropdown(null); }} className="w-full text-left px-4 py-2 hover:bg-slate-700 text-slate-200">Past Week</button>
+                <button onClick={() => { setSelectedDate('Past Month'); setActiveDropdown(null); }} className="w-full text-left px-4 py-2 hover:bg-slate-700 text-slate-200">Past Month</button>
+                <button onClick={() => { setSelectedDate('Past Year'); setActiveDropdown(null); }} className="w-full text-left px-4 py-2 hover:bg-slate-700 text-slate-200">Past Year</button>
+              </div>
+            )}
+          </div>
 
           {/* Tags Filter */}
           <div className="relative">
@@ -121,10 +152,20 @@ export const SearchPanel = () => {
       <div className="flex-1 overflow-visible md:overflow-y-auto p-8 relative z-10">
         <div className="max-w-3xl mx-auto">
           <div className="flex items-center justify-between mb-6 text-sm text-slate-400">
-            <span>Showing {filteredResults.length} results for "{query || (selectedTag || 'all')}"</span>
+            <span>Showing {filteredResults.length} results for "{query || 'all documents'}"</span>
             <div className="flex items-center gap-4">
-              <span className="flex items-center gap-1.5 cursor-pointer hover:text-white"><Clock size={14} /> Recent</span>
-              <span className="flex items-center gap-1.5 text-cyan-400 cursor-pointer"><Star size={14} /> Most Relevant</span>
+              <span 
+                onClick={() => setSortBy('recent')}
+                className={`flex items-center gap-1.5 cursor-pointer transition-colors ${sortBy === 'recent' ? 'text-cyan-400 font-medium' : 'hover:text-white'}`}
+              >
+                <Clock size={14} /> Recent
+              </span>
+              <span 
+                onClick={() => setSortBy('relevant')}
+                className={`flex items-center gap-1.5 cursor-pointer transition-colors ${sortBy === 'relevant' ? 'text-cyan-400 font-medium' : 'hover:text-white'}`}
+              >
+                <Star size={14} /> Most Relevant
+              </span>
             </div>
           </div>
 
@@ -134,7 +175,7 @@ export const SearchPanel = () => {
                 <Search size={48} className="mx-auto mb-4 opacity-50" />
                 <p>No results match your filters.</p>
                 <button 
-                  onClick={() => { setQuery(''); setSelectedType(null); setSelectedTag(null); }}
+                  onClick={() => { setQuery(''); setSelectedType(null); setSelectedTag(null); setSelectedDate(null); }}
                   className="mt-4 text-cyan-500 hover:text-cyan-400"
                 >
                   Clear all filters
