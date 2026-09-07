@@ -77,6 +77,7 @@ export const TeamsPanel = () => {
               </div>
             </div>
           ))}
+          </div>
         </div>
       </div>
     </div>

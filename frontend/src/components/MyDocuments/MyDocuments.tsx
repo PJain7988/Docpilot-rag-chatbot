@@ -28,11 +28,11 @@ export const MyDocuments = () => {
     setIsUploading(true);
     const result = await api.uploadDocument(file);
     setIsUploading(false);
-    
+
     if (result) {
       fetchDocuments();
     }
-    
+
     if (fileInputRef.current) {
       fileInputRef.current.value = '';
     }
@@ -47,14 +47,14 @@ export const MyDocuments = () => {
   };
 
   const getStatusIcon = (status: string) => {
-    switch(status) {
+    switch (status) {
       case 'READY': return <CheckCircle2 size={16} className="text-emerald-400" />;
       case 'FAILED': return <AlertCircle size={16} className="text-red-400" />;
       default: return <Loader2 size={16} className="text-cyan-400 animate-spin" />;
     }
   };
 
-  const filteredDocs = documents.filter(doc => 
+  const filteredDocs = documents.filter(doc =>
     doc.filename.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
@@ -65,27 +65,27 @@ export const MyDocuments = () => {
           <h1 className="text-2xl font-bold text-white mb-1">My Documents</h1>
           <p className="text-slate-400 text-sm">Manage and upload documents to your knowledge base.</p>
         </div>
-        
+
         <div className="flex items-center gap-4 w-full md:w-auto">
           <div className="relative">
             <Search size={16} className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-500" />
-            <input 
-              type="text" 
-              placeholder="Search documents..." 
+            <input
+              type="text"
+              placeholder="Search documents..."
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
               className="bg-slate-900 border border-slate-700 text-sm text-slate-200 rounded-lg pl-9 pr-4 py-2 focus:border-cyan-500/50 outline-none w-full md:w-64 transition-colors"
             />
           </div>
-          
-          <input 
-            type="file" 
-            ref={fileInputRef} 
-            onChange={handleFileUpload} 
-            className="hidden" 
+
+          <input
+            type="file"
+            ref={fileInputRef}
+            onChange={handleFileUpload}
+            className="hidden"
             accept=".pdf,.docx,.txt,.csv,.pptx"
           />
-          <button 
+          <button
             onClick={() => fileInputRef.current?.click()}
             disabled={isUploading}
             className="bg-cyan-600 hover:bg-cyan-500 text-white px-4 py-2 rounded-lg flex items-center gap-2 text-sm font-medium transition-colors shadow-glow disabled:opacity-50"
@@ -99,43 +99,45 @@ export const MyDocuments = () => {
       <div className="flex-1 bg-slate-900 border border-slate-800 rounded-xl overflow-x-auto flex flex-col">
         <div className="min-w-[700px]">
           <div className="grid grid-cols-12 gap-4 p-4 border-b border-slate-800 bg-slate-850/50 text-xs font-semibold text-slate-400 uppercase tracking-wider">
-          <div className="col-span-5">Filename</div>
-          <div className="col-span-2">Type</div>
-          <div className="col-span-2">Size</div>
-          <div className="col-span-2">Status</div>
-          <div className="col-span-1 text-right">Actions</div>
+            <div className="col-span-5">Filename</div>
+            <div className="col-span-2">Type</div>
+            <div className="col-span-2">Size</div>
+            <div className="col-span-2">Status</div>
+            <div className="col-span-1 text-right">Actions</div>
+          </div>
+
+          <div className="flex-1 overflow-y-auto">
+            {filteredDocs.length === 0 ? (
+              <div className="h-full flex flex-col items-center justify-center text-slate-500">
+                <FileIcon size={48} className="mb-4 opacity-50" />
+                <p>No documents found.</p>
+              </div>
+            ) : (
+              <div className="divide-y divide-slate-800/50">
+                {filteredDocs.map((doc) => (
+                  <div key={doc.id} className="grid grid-cols-12 gap-4 p-4 items-center hover:bg-slate-850/50 transition-colors">
+                    <div className="col-span-5 flex items-center gap-3 overflow-hidden">
+                      <FileIcon size={18} className="text-cyan-500 shrink-0" />
+                      <span className="text-sm font-medium text-slate-200 truncate">{doc.filename}</span>
+                    </div>
+                    <div className="col-span-2 text-sm text-slate-400 uppercase">{doc.file_type}</div>
+                    <div className="col-span-2 text-sm text-slate-400">{formatSize(doc.file_size)}</div>
+                    <div className="col-span-2 flex items-center gap-2">
+                      {getStatusIcon(doc.status)}
+                      <span className={clsx("text-sm", doc.status === 'READY' ? "text-emerald-400" : doc.status === 'FAILED' ? "text-red-400" : "text-cyan-400")}>
+                        {doc.status.charAt(0) + doc.status.slice(1).toLowerCase()}
+                      </span>
+                    </div>
+                    <div className="col-span-1 flex items-center justify-end gap-2 text-slate-500">
+                      <button className="p-1 hover:text-cyan-400 transition-colors"><Download size={16} /></button>
+                      <button className="p-1 hover:text-red-400 transition-colors"><Trash2 size={16} /></button>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            )}
+          </div>
         </div>
-        
-        <div className="flex-1 overflow-y-auto">
-          {filteredDocs.length === 0 ? (
-            <div className="h-full flex flex-col items-center justify-center text-slate-500">
-              <FileIcon size={48} className="mb-4 opacity-50" />
-              <p>No documents found.</p>
-            </div>
-          ) : (
-            <div className="divide-y divide-slate-800/50">
-              {filteredDocs.map((doc) => (
-                <div key={doc.id} className="grid grid-cols-12 gap-4 p-4 items-center hover:bg-slate-850/50 transition-colors">
-                  <div className="col-span-5 flex items-center gap-3 overflow-hidden">
-                    <FileIcon size={18} className="text-cyan-500 shrink-0" />
-                    <span className="text-sm font-medium text-slate-200 truncate">{doc.filename}</span>
-                  </div>
-                  <div className="col-span-2 text-sm text-slate-400 uppercase">{doc.file_type}</div>
-                  <div className="col-span-2 text-sm text-slate-400">{formatSize(doc.file_size)}</div>
-                  <div className="col-span-2 flex items-center gap-2">
-                    {getStatusIcon(doc.status)}
-                    <span className={clsx("text-sm", doc.status === 'READY' ? "text-emerald-400" : doc.status === 'FAILED' ? "text-red-400" : "text-cyan-400")}>
-                      {doc.status.charAt(0) + doc.status.slice(1).toLowerCase()}
-                    </span>
-                  </div>
-                  <div className="col-span-1 flex items-center justify-end gap-2 text-slate-500">
-                    <button className="p-1 hover:text-cyan-400 transition-colors"><Download size={16} /></button>
-                    <button className="p-1 hover:text-red-400 transition-colors"><Trash2 size={16} /></button>
-                  </div>
-                </div>
-              ))}
-            </div>
-          )}
         </div>
       </div>
     </div>
