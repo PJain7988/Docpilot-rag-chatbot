@@ -60,13 +60,13 @@ export const MyDocuments = () => {
 
   return (
     <div className="flex-1 flex flex-col h-full bg-slate-950 p-6 overflow-hidden">
-      <div className="flex items-center justify-between mb-8">
+      <div className="flex flex-col md:flex-row md:items-center justify-between mb-8 gap-4">
         <div>
           <h1 className="text-2xl font-bold text-white mb-1">My Documents</h1>
           <p className="text-slate-400 text-sm">Manage and upload documents to your knowledge base.</p>
         </div>
         
-        <div className="flex items-center gap-4">
+        <div className="flex items-center gap-4 w-full md:w-auto">
           <div className="relative">
             <Search size={16} className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-500" />
             <input 
@@ -74,7 +74,7 @@ export const MyDocuments = () => {
               placeholder="Search documents..." 
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
-              className="bg-slate-900 border border-slate-700 text-sm text-slate-200 rounded-lg pl-9 pr-4 py-2 focus:border-cyan-500/50 outline-none w-64 transition-colors"
+              className="bg-slate-900 border border-slate-700 text-sm text-slate-200 rounded-lg pl-9 pr-4 py-2 focus:border-cyan-500/50 outline-none w-full md:w-64 transition-colors"
             />
           </div>
           
@@ -96,8 +96,9 @@ export const MyDocuments = () => {
         </div>
       </div>
 
-      <div className="flex-1 bg-slate-900 border border-slate-800 rounded-xl overflow-hidden flex flex-col">
-        <div className="grid grid-cols-12 gap-4 p-4 border-b border-slate-800 bg-slate-850/50 text-xs font-semibold text-slate-400 uppercase tracking-wider">
+      <div className="flex-1 bg-slate-900 border border-slate-800 rounded-xl overflow-x-auto flex flex-col">
+        <div className="min-w-[700px]">
+          <div className="grid grid-cols-12 gap-4 p-4 border-b border-slate-800 bg-slate-850/50 text-xs font-semibold text-slate-400 uppercase tracking-wider">
           <div className="col-span-5">Filename</div>
           <div className="col-span-2">Type</div>
           <div className="col-span-2">Size</div>

@@ -13,9 +13,11 @@ import { clsx } from 'clsx';
 interface SidebarProps {
   activeTab: string;
   setActiveTab: (tab: string) => void;
+  isOpen: boolean;
+  setIsOpen: (isOpen: boolean) => void;
 }
 
-export const Sidebar = ({ activeTab, setActiveTab }: SidebarProps) => {
+export const Sidebar = ({ activeTab, setActiveTab, isOpen, setIsOpen }: SidebarProps) => {
   const navItems = [
     { icon: LayoutDashboard, label: 'Dashboard' },
     { icon: FileText, label: 'My Documents' },
@@ -32,7 +34,10 @@ export const Sidebar = ({ activeTab, setActiveTab }: SidebarProps) => {
   ];
 
   return (
-    <div className="w-64 h-full bg-slate-900 border-r border-slate-800 flex flex-col pt-6">
+    <div className={clsx(
+      "w-64 h-full bg-slate-900 border-r border-slate-800 flex flex-col pt-6 fixed md:relative z-50 transition-transform duration-300",
+      isOpen ? "translate-x-0" : "-translate-x-full md:translate-x-0"
+    )}>
       <div className="px-6 mb-8 flex items-center gap-3">
         {/* Logo placeholder */}
         <div className="text-cyan-500 flex items-center">

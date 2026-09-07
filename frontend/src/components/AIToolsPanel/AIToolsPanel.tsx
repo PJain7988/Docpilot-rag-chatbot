@@ -60,7 +60,7 @@ export const AIToolsPanel = () => {
         </p>
       </div>
 
-      <div className="grid grid-cols-2 gap-6 relative z-10 max-w-5xl">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-6 relative z-10 max-w-5xl">
         {tools.map((tool) => (
           <div key={tool.id} className={clsx(
             "group bg-slate-900 border border-slate-800 rounded-2xl p-6 transition-all duration-300 cursor-pointer flex flex-col",

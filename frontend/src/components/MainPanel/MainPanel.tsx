@@ -61,7 +61,7 @@ export const MainPanel = () => {
 
           <div className="text-xs text-slate-500 mb-4">Page 4 of 28</div>
           
-          <div className="grid grid-cols-2 gap-4 max-w-4xl mx-auto opacity-90 hover:opacity-100 transition-opacity">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 max-w-4xl mx-auto opacity-90 hover:opacity-100 transition-opacity">
             {/* Page 1 Mock */}
             <div className="bg-white rounded p-4 aspect-[1/1.4] shadow-sm flex flex-col">
                <div className="h-4 bg-slate-200 rounded w-3/4 mb-6"></div>
@@ -149,7 +149,7 @@ export const MainPanel = () => {
           {/* Document Metadata */}
           <div className="p-4 border-b border-slate-800/50 flex flex-col">
             <h3 className="text-sm font-medium text-slate-300 mb-3">Document Metadata</h3>
-            <div className="grid grid-cols-4 gap-4">
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
               <div>
                 <div className="text-xs text-slate-500 mb-1">Size</div>
                 <div className="text-sm text-slate-200">1.2MB</div>
@@ -172,7 +172,7 @@ export const MainPanel = () => {
           {/* Document Processing Stats */}
           <div className="p-4 flex flex-col">
             <h3 className="text-sm font-medium text-slate-300 mb-4">Document Processing Stats</h3>
-            <div className="grid grid-cols-4 gap-6">
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
               
               {/* Pages Processed */}
               <div>

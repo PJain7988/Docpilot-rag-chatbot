@@ -22,10 +22,10 @@ export const SettingsPanel = () => {
         <p className="text-slate-400 text-sm">Configure system preferences, API keys, and database connections.</p>
       </div>
 
-      <div className="flex-1 flex overflow-hidden">
+      <div className="flex-1 flex flex-col md:flex-row overflow-hidden">
         {/* Settings Sidebar */}
-        <div className="w-64 bg-slate-900 border-r border-slate-800 p-4 shrink-0 overflow-y-auto">
-          <div className="space-y-1 text-sm font-medium">
+        <div className="w-full md:w-64 bg-slate-900 border-b md:border-b-0 md:border-r border-slate-800 p-4 shrink-0 md:overflow-y-auto">
+          <div className="flex flex-row md:flex-col gap-2 overflow-x-auto md:overflow-visible space-y-0 md:space-y-1 text-sm font-medium pb-2 md:pb-0">
             {menuItems.map((item) => (
               <button
                 key={item.name}

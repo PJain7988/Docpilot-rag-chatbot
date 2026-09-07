@@ -1,6 +1,7 @@
 import { useState, useRef, useEffect } from 'react';
 import { MoreHorizontal, X, RotateCcw, ThumbsUp, ThumbsDown, Paperclip, Smile, Send, Mic, Loader2 } from 'lucide-react';
 import { api, type Citation } from '../../services/api';
+import { clsx } from 'clsx';
 
 interface Message {
   id: string;
@@ -10,7 +11,12 @@ interface Message {
   timestamp: Date;
 }
 
-export const ChatPanel = () => {
+interface ChatPanelProps {
+  isOpen: boolean;
+  setIsOpen: (isOpen: boolean) => void;
+}
+
+export const ChatPanel = ({ isOpen, setIsOpen }: ChatPanelProps) => {
   const [messages, setMessages] = useState<Message[]>([{
     id: '1',
     role: 'ai',
@@ -69,14 +75,16 @@ export const ChatPanel = () => {
   };
 
   return (
-    <div className="w-80 h-full bg-slate-900 border-l border-slate-800 flex flex-col">
-      {/* Header */}
+    <div className={clsx(
+      "w-80 h-full bg-slate-900 border-l border-slate-800 flex flex-col fixed md:relative right-0 z-40 transition-transform duration-300",
+      isOpen ? "translate-x-0" : "translate-x-full md:translate-x-0"
+    )}>
       <div className="h-16 flex items-center justify-between px-4 border-b border-slate-800 shrink-0">
         <span className="font-medium text-slate-200">Document Intelligence</span>
         <div className="flex items-center gap-2 text-slate-400">
           <button className="p-1.5 hover:bg-slate-800 rounded-md transition-colors" onClick={() => setMessages(messages.slice(0,1))}><RotateCcw size={16} /></button>
           <button className="p-1.5 hover:bg-slate-800 rounded-md transition-colors"><MoreHorizontal size={16} /></button>
-          <button className="p-1.5 hover:bg-slate-800 rounded-md transition-colors"><X size={16} /></button>
+          <button className="p-1.5 hover:bg-slate-800 rounded-md transition-colors md:hidden" onClick={() => setIsOpen(false)}><X size={16} /></button>
         </div>
       </div>
 

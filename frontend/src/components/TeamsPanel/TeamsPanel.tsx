@@ -11,7 +11,7 @@ export const TeamsPanel = () => {
 
   return (
     <div className="flex-1 flex flex-col h-full bg-slate-950 p-8 overflow-hidden">
-      <div className="flex items-center justify-between mb-10">
+      <div className="flex flex-col md:flex-row md:items-center justify-between mb-10 gap-4">
         <div>
           <h1 className="text-3xl font-bold text-white mb-2 flex items-center gap-3">
             <Users className="text-cyan-500" size={32} />
@@ -19,14 +19,15 @@ export const TeamsPanel = () => {
           </h1>
           <p className="text-slate-400 text-sm">Manage workspace members and their access controls.</p>
         </div>
-        <button className="bg-cyan-600 hover:bg-cyan-500 text-white px-5 py-2.5 rounded-xl flex items-center gap-2 text-sm font-medium transition-colors shadow-glow">
+        <button className="bg-cyan-600 hover:bg-cyan-500 text-white px-5 py-2.5 rounded-xl flex items-center gap-2 text-sm font-medium transition-colors shadow-glow w-full md:w-auto justify-center">
           <UserPlus size={18} />
           Invite Member
         </button>
       </div>
 
-      <div className="flex-1 bg-slate-900 border border-slate-800 rounded-2xl overflow-hidden flex flex-col max-w-5xl shadow-2xl">
-        <div className="grid grid-cols-12 gap-4 p-5 border-b border-slate-800 bg-slate-850/80 text-xs font-semibold text-slate-400 uppercase tracking-wider">
+      <div className="flex-1 bg-slate-900 border border-slate-800 rounded-2xl overflow-x-auto flex flex-col max-w-5xl shadow-2xl">
+        <div className="min-w-[800px] flex flex-col h-full">
+          <div className="grid grid-cols-12 gap-4 p-5 border-b border-slate-800 bg-slate-850/80 text-xs font-semibold text-slate-400 uppercase tracking-wider">
           <div className="col-span-4 pl-2">User</div>
           <div className="col-span-3">Email</div>
           <div className="col-span-2">Role</div>

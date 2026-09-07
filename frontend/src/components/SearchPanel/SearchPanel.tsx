@@ -60,7 +60,7 @@ export const SearchPanel = () => {
         </div>
 
         {/* Filters */}
-        <div className="w-full max-w-3xl flex items-center gap-3 text-sm">
+        <div className="w-full max-w-3xl flex flex-wrap items-center gap-3 text-sm">
           <span className="text-slate-500 flex items-center gap-1.5 font-medium"><Filter size={14} /> Filters:</span>
           <button className="flex items-center gap-1.5 px-3 py-1.5 bg-slate-900 border border-slate-800 rounded-lg text-slate-300 hover:border-slate-600 hover:text-white transition-colors">
             <FileText size={14} /> File Type <ChevronDown size={14} />
