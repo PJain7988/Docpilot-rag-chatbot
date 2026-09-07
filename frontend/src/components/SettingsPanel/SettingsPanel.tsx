@@ -5,6 +5,8 @@ import { clsx } from 'clsx';
 export const SettingsPanel = () => {
   const [activeMenu, setActiveMenu] = useState('LLM Providers');
   const [successMessage, setSuccessMessage] = useState<string | null>(null);
+  const [isDarkMode, setIsDarkMode] = useState(true);
+  const [is2FA, setIs2FA] = useState(false);
   
   const menuItems = [
     { name: 'General', icon: Monitor },
@@ -147,8 +149,17 @@ export const SettingsPanel = () => {
                         <div className="text-sm font-medium text-slate-200">Dark Mode</div>
                         <div className="text-xs text-slate-400">Enforce dark mode for all users</div>
                       </div>
-                      <div className="h-6 w-12 bg-cyan-600 rounded-full relative cursor-pointer shadow-[0_0_15px_rgba(6,182,212,0.5)]">
-                        <div className="absolute right-1 top-1 w-4 h-4 bg-white rounded-full"></div>
+                      <div 
+                        onClick={() => setIsDarkMode(!isDarkMode)}
+                        className={clsx(
+                          "h-6 w-12 rounded-full relative cursor-pointer transition-colors duration-300",
+                          isDarkMode ? "bg-cyan-600 shadow-[0_0_15px_rgba(6,182,212,0.5)]" : "bg-slate-700"
+                        )}
+                      >
+                        <div className={clsx(
+                          "absolute top-1 w-4 h-4 bg-white rounded-full transition-all duration-300",
+                          isDarkMode ? "right-1" : "left-1"
+                        )}></div>
                       </div>
                     </div>
                   </div>
@@ -200,8 +211,17 @@ export const SettingsPanel = () => {
                         <div className="text-sm font-medium text-slate-200">Require Two-Factor Authentication</div>
                         <div className="text-xs text-slate-400">Enforce 2FA for all team members</div>
                       </div>
-                      <div className="h-6 w-12 bg-cyan-600 rounded-full relative cursor-pointer shadow-[0_0_15px_rgba(6,182,212,0.5)]">
-                        <div className="absolute right-1 top-1 w-4 h-4 bg-white rounded-full"></div>
+                      <div 
+                        onClick={() => setIs2FA(!is2FA)}
+                        className={clsx(
+                          "h-6 w-12 rounded-full relative cursor-pointer transition-colors duration-300",
+                          is2FA ? "bg-cyan-600 shadow-[0_0_15px_rgba(6,182,212,0.5)]" : "bg-slate-700"
+                        )}
+                      >
+                        <div className={clsx(
+                          "absolute top-1 w-4 h-4 bg-white rounded-full transition-all duration-300",
+                          is2FA ? "right-1" : "left-1"
+                        )}></div>
                       </div>
                     </div>
                     <div>
