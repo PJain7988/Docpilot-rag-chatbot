@@ -142,10 +142,7 @@ export const SettingsPanel = () => {
             
           </div>
         </div>
-          </div>
-        </div>
       </div>
-
       {/* Success Toast */}
       {successMessage && (
         <div className="fixed bottom-6 right-6 z-[200] bg-emerald-500/10 border border-emerald-500/50 text-emerald-400 px-6 py-4 rounded-xl shadow-[0_0_20px_rgba(16,185,129,0.2)] flex items-center gap-3 animate-in slide-in-from-bottom-5 fade-in duration-300">
