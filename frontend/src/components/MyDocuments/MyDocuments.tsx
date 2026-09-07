@@ -150,9 +150,16 @@ export const MyDocuments = () => {
                         <Download size={16} />
                       </button>
                       <button 
-                        onClick={() => {
+                        onClick={async () => {
                           if (confirm(`Are you sure you want to delete ${doc.filename}?`)) {
+                            // Optimistically update UI
                             setDocuments(docs => docs.filter(d => d.id !== doc.id));
+                            // Delete from server
+                            const success = await api.deleteDocument(doc.id);
+                            if (!success) {
+                              alert("Failed to delete document from server.");
+                              fetchDocuments(); // Revert on failure
+                            }
                           }
                         }}
                         className="p-1 hover:text-red-400 transition-colors"

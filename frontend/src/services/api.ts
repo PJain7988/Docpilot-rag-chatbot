@@ -85,5 +85,21 @@ export const api = {
       console.error("API Upload Error:", error);
       return null;
     }
+  },
+  
+  deleteDocument: async (documentId: string): Promise<boolean> => {
+    try {
+      const response = await fetch(`${API_URL}/documents/${documentId}`, {
+        method: 'DELETE',
+        headers: {
+          'Authorization': `Bearer TEST_TOKEN`
+        }
+      });
+      if (!response.ok) throw new Error('Failed to delete document');
+      return true;
+    } catch (error) {
+      console.error("API Delete Error:", error);
+      return false;
+    }
   }
 };

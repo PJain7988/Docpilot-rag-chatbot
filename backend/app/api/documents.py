@@ -74,3 +74,24 @@ async def list_documents(
     else:
         result = await db.execute(select(Document).where(Document.owner_id == current_user.id))
     return result.scalars().all()
+
+@router.delete("/{document_id}")
+async def delete_document(
+    document_id: str,
+    db: AsyncSession = Depends(get_db),
+    current_user: User = Depends(get_current_user)
+):
+    try:
+        doc_uuid = uuid.UUID(document_id)
+        doc = await db.get(Document, doc_uuid)
+        if not doc:
+            raise HTTPException(status_code=404, detail="Document not found")
+        
+        if doc.owner_id != current_user.id and current_user.role != "admin":
+            raise HTTPException(status_code=403, detail="Not authorized to delete this document")
+            
+        await db.delete(doc)
+        await db.commit()
+        return {"status": "success", "message": "Document deleted"}
+    except ValueError:
+        raise HTTPException(status_code=400, detail="Invalid document ID format")
