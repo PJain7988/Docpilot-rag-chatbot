@@ -1,9 +1,12 @@
 import { useState } from 'react';
-import { Users, UserPlus, Shield, MoreVertical, CheckCircle2, X } from 'lucide-react';
+import { Users, UserPlus, Shield, MoreVertical, CheckCircle2, X, Loader2, Send } from 'lucide-react';
 import { clsx } from 'clsx';
 
 export const TeamsPanel = () => {
   const [successMessage, setSuccessMessage] = useState<string | null>(null);
+  const [isInviteModalOpen, setIsInviteModalOpen] = useState(false);
+  const [isInviting, setIsInviting] = useState(false);
+  const [inviteEmail, setInviteEmail] = useState('');
   const members = [
     { id: 1, name: 'Sarah Jenkins', email: 'sarah.j@company.com', role: 'Admin', status: 'Active', avatar: 'https://i.pravatar.cc/150?u=sarah' },
     { id: 2, name: 'David Chen', email: 'david.c@company.com', role: 'Editor', status: 'Active', avatar: 'https://i.pravatar.cc/150?u=david' },
@@ -22,10 +25,7 @@ export const TeamsPanel = () => {
           <p className="text-slate-400 text-sm">Manage workspace members and their access controls.</p>
         </div>
         <button 
-          onClick={() => {
-            setSuccessMessage("Invite link generated and sent!");
-            setTimeout(() => setSuccessMessage(null), 3000);
-          }}
+          onClick={() => setIsInviteModalOpen(true)}
           className="bg-cyan-600 hover:bg-cyan-500 text-white px-5 py-2.5 rounded-xl flex items-center gap-2 text-sm font-medium transition-colors shadow-glow w-full md:w-auto justify-center"
         >
           <UserPlus size={18} />
@@ -91,6 +91,84 @@ export const TeamsPanel = () => {
           </div>
         </div>
       </div>
+      {/* Invite Member Modal */}
+      {isInviteModalOpen && (
+        <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-slate-950/80 backdrop-blur-sm animate-in fade-in duration-200">
+          <div className="bg-slate-900 border border-slate-700 rounded-2xl w-full max-w-md shadow-2xl overflow-hidden flex flex-col animate-in slide-in-from-bottom-4 duration-300">
+            <div className="flex justify-between items-center p-6 border-b border-slate-800 bg-slate-850/50">
+              <h2 className="text-xl font-bold text-white flex items-center gap-3">
+                <div className="w-8 h-8 rounded-lg flex items-center justify-center bg-cyan-500/10 text-cyan-400">
+                  <UserPlus size={18} />
+                </div>
+                Invite Team Member
+              </h2>
+              <button 
+                onClick={() => setIsInviteModalOpen(false)} 
+                className="text-slate-400 hover:text-white transition-colors bg-slate-800 hover:bg-slate-700 p-1.5 rounded-lg"
+              >
+                <X size={20} />
+              </button>
+            </div>
+            
+            <div className="p-6">
+              <p className="text-slate-400 mb-6 text-sm leading-relaxed">Send an invitation email to add a new member to this workspace.</p>
+              
+              <div className="space-y-5">
+                <div>
+                  <label className="block text-sm font-medium text-slate-300 mb-2">Email Address</label>
+                  <input 
+                    type="email" 
+                    placeholder="colleague@company.com"
+                    value={inviteEmail}
+                    onChange={(e) => setInviteEmail(e.target.value)}
+                    className="w-full bg-slate-950 border border-slate-700 rounded-xl p-3 text-sm text-slate-200 outline-none focus:border-cyan-500 transition-colors"
+                  />
+                </div>
+                <div>
+                  <label className="block text-sm font-medium text-slate-300 mb-2">Role & Permissions</label>
+                  <select className="w-full bg-slate-950 border border-slate-700 rounded-xl p-3 text-sm text-slate-200 outline-none focus:border-cyan-500 transition-colors">
+                    <option>Viewer (Read-only)</option>
+                    <option>Editor (Can modify documents)</option>
+                    <option>Admin (Full access)</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+
+            <div className="p-6 border-t border-slate-800 bg-slate-850/50 flex justify-end gap-3">
+              <button 
+                onClick={() => setIsInviteModalOpen(false)} 
+                className="px-5 py-2.5 text-sm font-medium text-slate-300 hover:text-white transition-colors"
+                disabled={isInviting}
+              >
+                Cancel
+              </button>
+              <button 
+                onClick={() => {
+                  if (!inviteEmail) return;
+                  setIsInviting(true);
+                  setTimeout(() => {
+                    setIsInviting(false);
+                    setIsInviteModalOpen(false);
+                    setSuccessMessage(`Invitation sent to ${inviteEmail}!`);
+                    setInviteEmail('');
+                    setTimeout(() => setSuccessMessage(null), 4000);
+                  }, 1500);
+                }} 
+                disabled={isInviting || !inviteEmail}
+                className="bg-cyan-600 hover:bg-cyan-500 text-white px-6 py-2.5 rounded-xl text-sm font-medium transition-colors shadow-glow flex items-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed"
+              >
+                {isInviting ? (
+                  <><Loader2 size={16} className="animate-spin" /> Sending...</>
+                ) : (
+                  <><Send size={16} /> Send Invite</>
+                )}
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
       {/* Success Toast */}
       {successMessage && (
         <div className="fixed bottom-6 right-6 z-[200] bg-emerald-500/10 border border-emerald-500/50 text-emerald-400 px-6 py-4 rounded-xl shadow-[0_0_20px_rgba(16,185,129,0.2)] flex items-center gap-3 animate-in slide-in-from-bottom-5 fade-in duration-300">
