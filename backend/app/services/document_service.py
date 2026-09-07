@@ -4,6 +4,7 @@ from ..core.database import AsyncSessionLocal
 from ..models.document import Document, DocumentChunk, DocumentStatus
 from ..ingestion.parsers import DocumentParser
 from ..ingestion.chunker import DocumentChunker
+import uuid
 from .embedding_service import embedding_service
 from ..core.vector_store import vector_store
 
@@ -22,14 +23,14 @@ class DocumentService:
             logger.error(f"Failed to read file {file_path} for background processing: {e}")
             # If we could, we would mark the doc as failed, but we need a db session
             async with AsyncSessionLocal() as db:
-                doc = await db.get(Document, document_id)
+                doc = await db.get(Document, uuid.UUID(document_id))
                 if doc:
                     doc.status = DocumentStatus.FAILED
                     await db.commit()
 
     @staticmethod
     async def process_document(db: AsyncSession, document_id: str, file_bytes: bytes, file_name: str, file_type: str, owner_id: str):
-        doc = await db.get(Document, document_id)
+        doc = await db.get(Document, uuid.UUID(document_id))
         if not doc:
             logger.error(f"Document {document_id} not found in database.")
             return
@@ -60,7 +61,7 @@ class DocumentService:
             db_chunks = []
             for chunk in chunks:
                 db_chunk = DocumentChunk(
-                    document_id=document_id,
+                    document_id=uuid.UUID(document_id),
                     chunk_index=chunk["chunk_index"],
                     text=chunk["text"],
                     page_number=chunk.get("page_number")
