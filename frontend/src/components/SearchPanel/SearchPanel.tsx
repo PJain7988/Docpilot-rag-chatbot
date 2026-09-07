@@ -66,27 +66,27 @@ export const SearchPanel = () => {
       });
 
       return(
-    <div className = "flex-1 flex flex-col h-full bg-slate-950 overflow-y-auto md:overflow-hidden relative" >
+    <div className = "flex-1 flex flex-col h-full bg-slate-50 dark:bg-slate-950 overflow-y-auto md:overflow-hidden relative" >
           {/* Decorative background blur */ }
           < div className = "absolute top-[-10%] left-1/2 -translate-x-1/2 w-[800px] h-[400px] bg-cyan-500/10 rounded-full blur-[120px] pointer-events-none" ></div>
 
-      <div className="p-8 pb-4 shrink-0 relative z-20 flex flex-col items-center border-b border-slate-800/50 bg-slate-950/80 backdrop-blur-sm">
-        <h1 className="text-3xl font-bold text-white mb-6">Semantic Search</h1>
+      <div className="p-8 pb-4 shrink-0 relative z-20 flex flex-col items-center border-b border-slate-200 dark:border-slate-800/50 bg-slate-50 dark:bg-slate-950/80 backdrop-blur-sm">
+        <h1 className="text-3xl font-bold text-slate-800 dark:text-white mb-6">Semantic Search</h1>
         
         <div className="w-full max-w-3xl relative mb-6 group">
           <div className="absolute inset-0 bg-cyan-500/20 rounded-2xl blur-xl group-hover:bg-cyan-500/30 transition-colors duration-500"></div>
-          <div className="relative bg-slate-900 border border-slate-700/50 rounded-2xl flex items-center p-2 focus-within:border-cyan-500/50 focus-within:bg-slate-850 transition-all duration-300 shadow-2xl">
+          <div className="relative bg-white dark:bg-slate-900 border border-slate-300 dark:border-slate-700/50 rounded-2xl flex items-center p-2 focus-within:border-cyan-500/50 focus-within:bg-slate-100 dark:focus-within:bg-slate-850 transition-all duration-300 shadow-2xl">
             <Search size={24} className="text-cyan-500 ml-4 mr-3" />
             <input 
               type="text" 
               placeholder="Search across all your documents using natural language..." 
               value={query}
               onChange={(e) => setQuery(e.target.value)}
-              className="flex-1 bg-transparent text-slate-200 py-3 px-2 outline-none text-lg placeholder:text-slate-500"
+              className="flex-1 bg-transparent text-slate-900 dark:text-slate-200 py-3 px-2 outline-none text-lg placeholder:text-slate-500"
             />
             <button 
               onClick={() => alert('Search functionality coming soon!')}
-              className="bg-cyan-600 hover:bg-cyan-500 text-white px-6 py-2.5 rounded-xl font-medium transition-colors shadow-glow ml-2"
+              className="bg-cyan-600 hover:bg-cyan-500 text-slate-800 dark:text-white px-6 py-2.5 rounded-xl font-medium transition-colors shadow-glow ml-2"
             >
               Search
             </button>
@@ -101,15 +101,15 @@ export const SearchPanel = () => {
           <div className="relative">
             <button 
               onClick={() => setActiveDropdown(activeDropdown === 'type' ? null : 'type')} 
-              className={`flex items-center gap-1.5 px-3 py-1.5 bg-slate-900 border rounded-lg transition-colors ${selectedType ? 'border-cyan-500 text-cyan-400 shadow-[0_0_10px_rgba(6,182,212,0.2)]' : 'border-slate-800 text-slate-300 hover:border-slate-600 hover:text-white'}`}
+              className={`flex items-center gap-1.5 px-3 py-1.5 bg-white dark:bg-slate-900 border rounded-lg transition-colors ${selectedType ? 'border-cyan-500 text-cyan-400 shadow-[0_0_10px_rgba(6,182,212,0.2)]' : 'border-slate-200 dark:border-slate-800 text-slate-700 dark:text-slate-300 hover:border-slate-600 hover:text-slate-800 dark:text-white'}`}
             >
               <FileText size={14} /> {selectedType || 'File Type'} <ChevronDown size={14} />
             </button>
             {activeDropdown === 'type' && (
-              <div className="absolute top-full left-0 mt-2 w-32 bg-slate-800 border border-slate-700 rounded-lg shadow-xl overflow-hidden z-50">
-                <button onClick={() => { setSelectedType(null); setActiveDropdown(null); }} className="w-full text-left px-4 py-2 hover:bg-slate-700 text-slate-200">All Types</button>
-                <button onClick={() => { setSelectedType('PDF'); setActiveDropdown(null); }} className="w-full text-left px-4 py-2 hover:bg-slate-700 text-slate-200">PDF</button>
-                <button onClick={() => { setSelectedType('DOCX'); setActiveDropdown(null); }} className="w-full text-left px-4 py-2 hover:bg-slate-700 text-slate-200">DOCX</button>
+              <div className="absolute top-full left-0 mt-2 w-32 bg-slate-100 dark:bg-slate-800 border border-slate-300 dark:border-slate-700 rounded-lg shadow-xl overflow-hidden z-50">
+                <button onClick={() => { setSelectedType(null); setActiveDropdown(null); }} className="w-full text-left px-4 py-2 hover:bg-slate-700 text-slate-900 dark:text-slate-200">All Types</button>
+                <button onClick={() => { setSelectedType('PDF'); setActiveDropdown(null); }} className="w-full text-left px-4 py-2 hover:bg-slate-700 text-slate-900 dark:text-slate-200">PDF</button>
+                <button onClick={() => { setSelectedType('DOCX'); setActiveDropdown(null); }} className="w-full text-left px-4 py-2 hover:bg-slate-700 text-slate-900 dark:text-slate-200">DOCX</button>
               </div>
             )}
           </div>
@@ -118,16 +118,16 @@ export const SearchPanel = () => {
           <div className="relative">
             <button 
               onClick={() => setActiveDropdown(activeDropdown === 'date' ? null : 'date')} 
-              className={`flex items-center gap-1.5 px-3 py-1.5 bg-slate-900 border rounded-lg transition-colors ${selectedDate ? 'border-cyan-500 text-cyan-400 shadow-[0_0_10px_rgba(6,182,212,0.2)]' : 'border-slate-800 text-slate-300 hover:border-slate-600 hover:text-white'}`}
+              className={`flex items-center gap-1.5 px-3 py-1.5 bg-white dark:bg-slate-900 border rounded-lg transition-colors ${selectedDate ? 'border-cyan-500 text-cyan-400 shadow-[0_0_10px_rgba(6,182,212,0.2)]' : 'border-slate-200 dark:border-slate-800 text-slate-700 dark:text-slate-300 hover:border-slate-600 hover:text-slate-800 dark:text-white'}`}
             >
               <Calendar size={14} /> {selectedDate || 'Date Range'} <ChevronDown size={14} />
             </button>
             {activeDropdown === 'date' && (
-              <div className="absolute top-full left-0 mt-2 w-40 bg-slate-800 border border-slate-700 rounded-lg shadow-xl overflow-hidden z-50">
-                <button onClick={() => { setSelectedDate(null); setActiveDropdown(null); }} className="w-full text-left px-4 py-2 hover:bg-slate-700 text-slate-200">All Time</button>
-                <button onClick={() => { setSelectedDate('Past Week'); setActiveDropdown(null); }} className="w-full text-left px-4 py-2 hover:bg-slate-700 text-slate-200">Past Week</button>
-                <button onClick={() => { setSelectedDate('Past Month'); setActiveDropdown(null); }} className="w-full text-left px-4 py-2 hover:bg-slate-700 text-slate-200">Past Month</button>
-                <button onClick={() => { setSelectedDate('Past Year'); setActiveDropdown(null); }} className="w-full text-left px-4 py-2 hover:bg-slate-700 text-slate-200">Past Year</button>
+              <div className="absolute top-full left-0 mt-2 w-40 bg-slate-100 dark:bg-slate-800 border border-slate-300 dark:border-slate-700 rounded-lg shadow-xl overflow-hidden z-50">
+                <button onClick={() => { setSelectedDate(null); setActiveDropdown(null); }} className="w-full text-left px-4 py-2 hover:bg-slate-700 text-slate-900 dark:text-slate-200">All Time</button>
+                <button onClick={() => { setSelectedDate('Past Week'); setActiveDropdown(null); }} className="w-full text-left px-4 py-2 hover:bg-slate-700 text-slate-900 dark:text-slate-200">Past Week</button>
+                <button onClick={() => { setSelectedDate('Past Month'); setActiveDropdown(null); }} className="w-full text-left px-4 py-2 hover:bg-slate-700 text-slate-900 dark:text-slate-200">Past Month</button>
+                <button onClick={() => { setSelectedDate('Past Year'); setActiveDropdown(null); }} className="w-full text-left px-4 py-2 hover:bg-slate-700 text-slate-900 dark:text-slate-200">Past Year</button>
               </div>
             )}
           </div>
@@ -136,17 +136,17 @@ export const SearchPanel = () => {
           <div className="relative">
             <button 
               onClick={() => setActiveDropdown(activeDropdown === 'tag' ? null : 'tag')} 
-              className={`flex items-center gap-1.5 px-3 py-1.5 bg-slate-900 border rounded-lg transition-colors ${selectedTag ? 'border-cyan-500 text-cyan-400 shadow-[0_0_10px_rgba(6,182,212,0.2)]' : 'border-slate-800 text-slate-300 hover:border-slate-600 hover:text-white'}`}
+              className={`flex items-center gap-1.5 px-3 py-1.5 bg-white dark:bg-slate-900 border rounded-lg transition-colors ${selectedTag ? 'border-cyan-500 text-cyan-400 shadow-[0_0_10px_rgba(6,182,212,0.2)]' : 'border-slate-200 dark:border-slate-800 text-slate-700 dark:text-slate-300 hover:border-slate-600 hover:text-slate-800 dark:text-white'}`}
             >
               <Tag size={14} /> {selectedTag || 'Tags'} <ChevronDown size={14} />
             </button>
             {activeDropdown === 'tag' && (
-              <div className="absolute top-full left-0 mt-2 w-40 bg-slate-800 border border-slate-700 rounded-lg shadow-xl overflow-hidden z-50">
-                <button onClick={() => { setSelectedTag(null); setActiveDropdown(null); }} className="w-full text-left px-4 py-2 hover:bg-slate-700 text-slate-200">All Tags</button>
-                <button onClick={() => { setSelectedTag('Security'); setActiveDropdown(null); }} className="w-full text-left px-4 py-2 hover:bg-slate-700 text-slate-200">Security</button>
-                <button onClick={() => { setSelectedTag('Compliance'); setActiveDropdown(null); }} className="w-full text-left px-4 py-2 hover:bg-slate-700 text-slate-200">Compliance</button>
-                <button onClick={() => { setSelectedTag('Migration'); setActiveDropdown(null); }} className="w-full text-left px-4 py-2 hover:bg-slate-700 text-slate-200">Migration</button>
-                <button onClick={() => { setSelectedTag('HR'); setActiveDropdown(null); }} className="w-full text-left px-4 py-2 hover:bg-slate-700 text-slate-200">HR</button>
+              <div className="absolute top-full left-0 mt-2 w-40 bg-slate-100 dark:bg-slate-800 border border-slate-300 dark:border-slate-700 rounded-lg shadow-xl overflow-hidden z-50">
+                <button onClick={() => { setSelectedTag(null); setActiveDropdown(null); }} className="w-full text-left px-4 py-2 hover:bg-slate-700 text-slate-900 dark:text-slate-200">All Tags</button>
+                <button onClick={() => { setSelectedTag('Security'); setActiveDropdown(null); }} className="w-full text-left px-4 py-2 hover:bg-slate-700 text-slate-900 dark:text-slate-200">Security</button>
+                <button onClick={() => { setSelectedTag('Compliance'); setActiveDropdown(null); }} className="w-full text-left px-4 py-2 hover:bg-slate-700 text-slate-900 dark:text-slate-200">Compliance</button>
+                <button onClick={() => { setSelectedTag('Migration'); setActiveDropdown(null); }} className="w-full text-left px-4 py-2 hover:bg-slate-700 text-slate-900 dark:text-slate-200">Migration</button>
+                <button onClick={() => { setSelectedTag('HR'); setActiveDropdown(null); }} className="w-full text-left px-4 py-2 hover:bg-slate-700 text-slate-900 dark:text-slate-200">HR</button>
               </div>
             )}
           </div>
@@ -155,18 +155,18 @@ export const SearchPanel = () => {
 
       <div className="flex-1 overflow-visible md:overflow-y-auto p-8 relative z-10">
         <div className="max-w-3xl mx-auto">
-          <div className="flex items-center justify-between mb-6 text-sm text-slate-400">
+          <div className="flex items-center justify-between mb-6 text-sm text-slate-500 dark:text-slate-400">
             <span>Showing {filteredResults.length} results for "{query || 'all documents'}"</span>
             <div className="flex items-center gap-4">
               <span 
                 onClick={() => setSortBy('recent')}
-                className={`flex items-center gap-1.5 cursor-pointer transition-colors ${sortBy === 'recent' ? 'text-cyan-400 font-medium' : 'hover:text-white'}`}
+                className={`flex items-center gap-1.5 cursor-pointer transition-colors ${sortBy === 'recent' ? 'text-cyan-400 font-medium' : 'hover:text-slate-800 dark:text-white'}`}
               >
                 <Clock size={14} /> Recent
               </span>
               <span 
                 onClick={() => setSortBy('relevant')}
-                className={`flex items-center gap-1.5 cursor-pointer transition-colors ${sortBy === 'relevant' ? 'text-cyan-400 font-medium' : 'hover:text-white'}`}
+                className={`flex items-center gap-1.5 cursor-pointer transition-colors ${sortBy === 'relevant' ? 'text-cyan-400 font-medium' : 'hover:text-slate-800 dark:text-white'}`}
               >
                 <Star size={14} /> Most Relevant
               </span>
@@ -187,9 +187,9 @@ export const SearchPanel = () => {
               </div>
             ) : (
               filteredResults.map((result) => (
-                <div key={result.id} className="bg-slate-900/50 border border-slate-800 rounded-xl p-5 hover:bg-slate-850 hover:border-slate-700 transition-all duration-200 group cursor-pointer">
+                <div key={result.id} className="bg-white dark:bg-slate-900/50 border border-slate-200 dark:border-slate-800 rounded-xl p-5 hover:bg-slate-850 hover:border-slate-300 dark:border-slate-700 transition-all duration-200 group cursor-pointer">
                   <div className="flex justify-between items-start mb-2">
-                    <h3 className="text-lg font-semibold text-slate-200 group-hover:text-cyan-400 transition-colors flex items-center gap-2">
+                    <h3 className="text-lg font-semibold text-slate-900 dark:text-slate-200 group-hover:text-cyan-400 transition-colors flex items-center gap-2">
                       <FileText size={18} className="text-slate-500 group-hover:text-cyan-400" />
                       {result.title}
                     </h3>
@@ -200,7 +200,7 @@ export const SearchPanel = () => {
                     </div>
                   </div>
                   
-                  <p className="text-sm text-slate-400 leading-relaxed mb-4 line-clamp-2">
+                  <p className="text-sm text-slate-500 dark:text-slate-400 leading-relaxed mb-4 line-clamp-2">
                     {result.snippet}
                   </p>
                   
@@ -209,7 +209,7 @@ export const SearchPanel = () => {
                     <span className="text-slate-500 flex items-center gap-1"><Calendar size={12} /> {result.date}</span>
                     <div className="flex gap-2">
                       {result.tags.map(tag => (
-                        <span key={tag} className="text-slate-400 bg-slate-800 px-2 py-0.5 rounded flex items-center gap-1">
+                        <span key={tag} className="text-slate-500 dark:text-slate-400 bg-slate-100 dark:bg-slate-800 px-2 py-0.5 rounded flex items-center gap-1">
                           <Tag size={10} /> {tag}
                         </span>
                       ))}

@@ -76,15 +76,15 @@ export const ChatPanel = ({ isOpen, setIsOpen }: ChatPanelProps) => {
 
   return (
     <div className={clsx(
-      "w-80 h-full bg-slate-900 border-l border-slate-800 flex flex-col fixed md:relative right-0 z-40 transition-transform duration-300",
+      "w-80 h-full bg-white dark:bg-slate-900 border-l border-slate-200 dark:border-slate-800 flex flex-col fixed md:relative right-0 z-40 transition-transform duration-300",
       isOpen ? "translate-x-0" : "translate-x-full md:translate-x-0"
     )}>
-      <div className="h-16 flex items-center justify-between px-4 border-b border-slate-800 shrink-0">
-        <span className="font-medium text-slate-200">Document Intelligence</span>
-        <div className="flex items-center gap-2 text-slate-400">
-          <button className="p-1.5 hover:bg-slate-800 rounded-md transition-colors" onClick={() => setMessages(messages.slice(0,1))}><RotateCcw size={16} /></button>
-          <button className="p-1.5 hover:bg-slate-800 rounded-md transition-colors"><MoreHorizontal size={16} /></button>
-          <button className="p-1.5 hover:bg-slate-800 rounded-md transition-colors md:hidden" onClick={() => setIsOpen(false)}><X size={16} /></button>
+      <div className="h-16 flex items-center justify-between px-4 border-b border-slate-200 dark:border-slate-800 shrink-0">
+        <span className="font-medium text-slate-900 dark:text-slate-200">Document Intelligence</span>
+        <div className="flex items-center gap-2 text-slate-500 dark:text-slate-400">
+          <button className="p-1.5 hover:bg-slate-100 dark:bg-slate-800 rounded-md transition-colors" onClick={() => setMessages(messages.slice(0,1))}><RotateCcw size={16} /></button>
+          <button className="p-1.5 hover:bg-slate-100 dark:bg-slate-800 rounded-md transition-colors"><MoreHorizontal size={16} /></button>
+          <button className="p-1.5 hover:bg-slate-100 dark:bg-slate-800 rounded-md transition-colors md:hidden" onClick={() => setIsOpen(false)}><X size={16} /></button>
         </div>
       </div>
 
@@ -96,11 +96,11 @@ export const ChatPanel = ({ isOpen, setIsOpen }: ChatPanelProps) => {
             {msg.role === 'user' ? (
               <>
                 <div className="flex justify-end">
-                  <div className="bg-slate-800/80 border border-slate-700 text-slate-200 text-sm p-3 rounded-2xl rounded-tr-sm max-w-[90%] shadow-lg">
+                  <div className="bg-slate-100 dark:bg-slate-850/50 border border-slate-300 dark:border-slate-700 text-slate-900 dark:text-slate-200 text-sm p-3 rounded-2xl rounded-tr-sm max-w-[90%] shadow-lg">
                     {msg.text}
                   </div>
                 </div>
-                <div className="text-[10px] text-slate-500 text-right mt-1">{formatTime(msg.timestamp)}</div>
+                <div className="text-[10px] text-slate-400 dark:text-slate-500 text-right mt-1">{formatTime(msg.timestamp)}</div>
               </>
             ) : (
               <div className="flex gap-3">
@@ -108,16 +108,16 @@ export const ChatPanel = ({ isOpen, setIsOpen }: ChatPanelProps) => {
                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="text-cyan-400"><path d="M2 22 12 2l10 20-10-4z"/></svg>
                 </div>
                 <div>
-                  <div className="text-xs font-medium text-slate-300 mb-1">DocPilot Assistant</div>
-                  <div className="bg-panel-gradient border border-cyan-500/50 shadow-glow text-slate-300 text-sm p-4 rounded-2xl rounded-tl-sm w-full leading-relaxed whitespace-pre-wrap">
+                  <div className="text-xs font-medium text-slate-700 dark:text-slate-300 mb-1">DocPilot Assistant</div>
+                  <div className="bg-panel-gradient border border-cyan-500/50 shadow-glow text-slate-700 dark:text-slate-300 text-sm p-4 rounded-2xl rounded-tl-sm w-full leading-relaxed whitespace-pre-wrap">
                     {msg.text}
                     
                     {msg.citations && msg.citations.length > 0 && (
-                      <div className="mt-4 pt-3 border-t border-slate-700/50">
-                        <div className="text-xs text-slate-400 mb-2 font-medium uppercase tracking-wide">Citations</div>
+                      <div className="mt-4 pt-3 border-t border-slate-300 dark:border-slate-700/50">
+                        <div className="text-xs text-slate-500 dark:text-slate-400 mb-2 font-medium uppercase tracking-wide">Citations</div>
                         <div className="flex flex-wrap gap-2">
                           {msg.citations.map((cite, idx) => (
-                             <span key={idx} className="text-[11px] px-2 py-1 bg-slate-800 rounded border border-slate-700 text-cyan-300 hover:bg-slate-700 cursor-pointer transition-colors" title={cite.text_snippet}>
+                             <span key={idx} className="text-[11px] px-2 py-1 bg-slate-100 dark:bg-slate-800 rounded border border-slate-300 dark:border-slate-700 text-cyan-300 hover:bg-slate-700 cursor-pointer transition-colors" title={cite.text_snippet}>
                                [{cite.id}] {cite.document} (Pg. {cite.page})
                              </span>
                           ))}
@@ -126,7 +126,7 @@ export const ChatPanel = ({ isOpen, setIsOpen }: ChatPanelProps) => {
                     )}
                   </div>
                   
-                  <div className="flex items-center gap-2 mt-2 ml-1 text-slate-500">
+                  <div className="flex items-center gap-2 mt-2 ml-1 text-slate-400 dark:text-slate-500">
                     <button className="p-1 hover:text-cyan-400 transition-colors"><ThumbsUp size={14} /></button>
                     <button className="p-1 hover:text-red-400 transition-colors"><ThumbsDown size={14} /></button>
                   </div>
@@ -141,8 +141,8 @@ export const ChatPanel = ({ isOpen, setIsOpen }: ChatPanelProps) => {
                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="text-cyan-400"><path d="M2 22 12 2l10 20-10-4z"/></svg>
             </div>
             <div>
-              <div className="text-xs font-medium text-slate-300 mb-1">DocPilot Assistant</div>
-              <div className="bg-panel-gradient border border-cyan-500/50 shadow-glow text-slate-300 text-sm p-4 rounded-2xl rounded-tl-sm w-full leading-relaxed flex items-center gap-2">
+              <div className="text-xs font-medium text-slate-700 dark:text-slate-300 mb-1">DocPilot Assistant</div>
+              <div className="bg-panel-gradient border border-cyan-500/50 shadow-glow text-slate-700 dark:text-slate-300 text-sm p-4 rounded-2xl rounded-tl-sm w-full leading-relaxed flex items-center gap-2">
                 <Loader2 size={16} className="animate-spin text-cyan-400" /> Thinking...
               </div>
             </div>
@@ -152,8 +152,8 @@ export const ChatPanel = ({ isOpen, setIsOpen }: ChatPanelProps) => {
       </div>
 
       {/* Input Area */}
-      <div className="p-4 bg-slate-900 border-t border-slate-800">
-        <div className="relative bg-slate-850 border border-slate-700 rounded-xl focus-within:border-cyan-500/50 focus-within:shadow-glow transition-all duration-300 overflow-hidden">
+      <div className="p-4 bg-white dark:bg-slate-900 border-t border-slate-200 dark:border-slate-800">
+        <div className="relative bg-slate-850 border border-slate-300 dark:border-slate-700 rounded-xl focus-within:border-cyan-500/50 focus-within:shadow-glow transition-all duration-300 overflow-hidden">
           <input 
             type="text" 
             placeholder="Type a message..." 
@@ -161,14 +161,14 @@ export const ChatPanel = ({ isOpen, setIsOpen }: ChatPanelProps) => {
             onChange={(e) => setInput(e.target.value)}
             onKeyDown={handleKeyDown}
             disabled={isLoading}
-            className="w-full bg-transparent text-sm text-slate-200 px-4 py-3 pb-12 outline-none placeholder:text-slate-500 disabled:opacity-50"
+            className="w-full bg-transparent text-sm text-slate-900 dark:text-slate-200 px-4 py-3 pb-12 outline-none placeholder:text-slate-400 dark:text-slate-500 disabled:opacity-50"
           />
-          <div className="absolute bottom-2 left-3 flex items-center gap-2 text-slate-500">
-            <button className="p-1 hover:text-slate-300 transition-colors"><Paperclip size={16} /></button>
-            <button className="p-1 hover:text-slate-300 transition-colors"><Smile size={16} /></button>
+          <div className="absolute bottom-2 left-3 flex items-center gap-2 text-slate-400 dark:text-slate-500">
+            <button className="p-1 hover:text-slate-700 dark:text-slate-300 transition-colors"><Paperclip size={16} /></button>
+            <button className="p-1 hover:text-slate-700 dark:text-slate-300 transition-colors"><Smile size={16} /></button>
           </div>
           <div className="absolute bottom-2 right-3 flex items-center gap-2">
-            <button className="p-1 text-slate-500 hover:text-slate-300 transition-colors"><Mic size={16} /></button>
+            <button className="p-1 text-slate-400 dark:text-slate-500 hover:text-slate-700 dark:text-slate-300 transition-colors"><Mic size={16} /></button>
             <button 
               onClick={handleSend}
               disabled={isLoading || !input.trim()}

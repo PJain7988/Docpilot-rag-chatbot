@@ -68,15 +68,15 @@ export const AIToolsPanel = () => {
   const filteredTools = activeFilter === 'All' ? tools : tools.filter(t => t.category === activeFilter);
 
   return (
-    <div className="flex-1 flex flex-col h-full bg-slate-950 p-8 overflow-y-auto relative">
+    <div className="flex-1 flex flex-col h-full bg-slate-50 dark:bg-slate-950 p-8 overflow-y-auto relative">
       <div className="absolute top-0 right-0 w-[600px] h-[600px] bg-cyan-500/5 rounded-full blur-[150px] pointer-events-none"></div>
       
       <div className="mb-10 relative z-10">
-        <h1 className="text-3xl font-bold text-white mb-2 flex items-center gap-3">
+        <h1 className="text-3xl font-bold text-slate-800 dark:text-white mb-2 flex items-center gap-3">
           <Cpu className="text-cyan-500" size={32} />
           AI Workflows & Tools
         </h1>
-        <p className="text-slate-400 text-sm max-w-2xl leading-relaxed">
+        <p className="text-slate-500 dark:text-slate-400 text-sm max-w-2xl leading-relaxed">
           Supercharge your document intelligence with automated pipelines and specialized agents. 
           Configure these tools to run in the background or interact with them directly.
         </p>
@@ -92,7 +92,7 @@ export const AIToolsPanel = () => {
               "px-3 py-1.5 rounded-lg text-sm font-medium transition-colors border",
               activeFilter === category 
                 ? "bg-cyan-500/20 text-cyan-400 border-cyan-500/50 shadow-[0_0_10px_rgba(6,182,212,0.2)]" 
-                : "bg-slate-900 text-slate-400 border-slate-800 hover:text-white hover:border-slate-600"
+                : "bg-white dark:bg-slate-900 text-slate-500 dark:text-slate-400 border-slate-200 dark:border-slate-800 hover:text-slate-800 dark:text-white hover:border-slate-600"
             )}
           >
             {category}
@@ -106,7 +106,7 @@ export const AIToolsPanel = () => {
             key={tool.id} 
             onClick={() => setSelectedTool(tool)}
             className={clsx(
-            "group bg-slate-900 border border-slate-800 rounded-2xl p-6 transition-all duration-300 cursor-pointer flex flex-col",
+            "group bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl p-6 transition-all duration-300 cursor-pointer flex flex-col",
             tool.border,
             tool.shadow
           )}>
@@ -114,16 +114,16 @@ export const AIToolsPanel = () => {
               <div className={clsx("w-12 h-12 rounded-xl flex items-center justify-center transition-transform group-hover:scale-110", tool.bg, tool.color)}>
                 <tool.icon size={24} />
               </div>
-              <span className="text-xs font-medium px-2.5 py-1 bg-slate-800 text-slate-300 rounded-full border border-slate-700">
+              <span className="text-xs font-medium px-2.5 py-1 bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 rounded-full border border-slate-300 dark:border-slate-700">
                 Configurable
               </span>
             </div>
             
-            <h3 className="text-xl font-bold text-slate-200 mb-3 group-hover:text-white transition-colors">
+            <h3 className="text-xl font-bold text-slate-900 dark:text-slate-200 mb-3 group-hover:text-slate-800 dark:text-white transition-colors">
               {tool.title}
             </h3>
             
-            <p className="text-sm text-slate-400 leading-relaxed mb-8 flex-1">
+            <p className="text-sm text-slate-500 dark:text-slate-400 leading-relaxed mb-8 flex-1">
               {tool.description}
             </p>
             <div className="flex items-center text-sm font-semibold transition-colors mt-auto">
@@ -136,10 +136,10 @@ export const AIToolsPanel = () => {
 
       {/* Configuration Modal */}
       {selectedTool && (
-        <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-slate-950/80 backdrop-blur-sm animate-in fade-in duration-200">
-          <div className="bg-slate-900 border border-slate-700 rounded-2xl w-full max-w-lg shadow-2xl overflow-hidden flex flex-col animate-in slide-in-from-bottom-4 duration-300">
-            <div className="flex justify-between items-center p-6 border-b border-slate-800 bg-slate-850/50">
-              <h2 className="text-xl font-bold text-white flex items-center gap-3">
+        <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-slate-50 dark:bg-slate-950/80 backdrop-blur-sm animate-in fade-in duration-200">
+          <div className="bg-white dark:bg-slate-900 border border-slate-300 dark:border-slate-700 rounded-2xl w-full max-w-lg shadow-2xl overflow-hidden flex flex-col animate-in slide-in-from-bottom-4 duration-300">
+            <div className="flex justify-between items-center p-6 border-b border-slate-200 dark:border-slate-800 bg-slate-100 dark:bg-slate-850/50">
+              <h2 className="text-xl font-bold text-slate-800 dark:text-white flex items-center gap-3">
                 <div className={clsx("w-8 h-8 rounded-lg flex items-center justify-center", selectedTool.bg, selectedTool.color)}>
                   <selectedTool.icon size={18} />
                 </div>
@@ -147,27 +147,27 @@ export const AIToolsPanel = () => {
               </h2>
               <button 
                 onClick={() => setSelectedTool(null)} 
-                className="text-slate-400 hover:text-white transition-colors bg-slate-800 hover:bg-slate-700 p-1.5 rounded-lg"
+                className="text-slate-500 dark:text-slate-400 hover:text-slate-800 dark:text-white transition-colors bg-slate-100 dark:bg-slate-800 hover:bg-slate-700 p-1.5 rounded-lg"
               >
                 <X size={20} />
               </button>
             </div>
             
             <div className="p-6">
-              <p className="text-slate-400 mb-6 text-sm leading-relaxed">{selectedTool.description}</p>
+              <p className="text-slate-500 dark:text-slate-400 mb-6 text-sm leading-relaxed">{selectedTool.description}</p>
               
               <div className="space-y-5">
                 <div>
-                  <label className="block text-sm font-medium text-slate-300 mb-2">Target Document Scope</label>
-                  <select className="w-full bg-slate-950 border border-slate-700 rounded-xl p-3 text-sm text-slate-200 outline-none focus:border-cyan-500 transition-colors">
+                  <label className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-2">Target Document Scope</label>
+                  <select className="w-full bg-slate-50 dark:bg-slate-950 border border-slate-300 dark:border-slate-700 rounded-xl p-3 text-sm text-slate-900 dark:text-slate-200 outline-none focus:border-cyan-500 transition-colors">
                     <option>All Uploaded Documents</option>
                     <option>Recently Added (Past 7 Days)</option>
                     <option>Selected Tags Only...</option>
                   </select>
                 </div>
                 <div>
-                  <label className="block text-sm font-medium text-slate-300 mb-2">Execution Mode</label>
-                  <select className="w-full bg-slate-950 border border-slate-700 rounded-xl p-3 text-sm text-slate-200 outline-none focus:border-cyan-500 transition-colors">
+                  <label className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-2">Execution Mode</label>
+                  <select className="w-full bg-slate-50 dark:bg-slate-950 border border-slate-300 dark:border-slate-700 rounded-xl p-3 text-sm text-slate-900 dark:text-slate-200 outline-none focus:border-cyan-500 transition-colors">
                     <option>Run Immediately</option>
                     <option>Schedule Background Job (Off-peak)</option>
                   </select>
@@ -181,10 +181,10 @@ export const AIToolsPanel = () => {
               </div>
             </div>
 
-            <div className="p-6 border-t border-slate-800 bg-slate-850/50 flex justify-end gap-3">
+            <div className="p-6 border-t border-slate-200 dark:border-slate-800 bg-slate-100 dark:bg-slate-850/50 flex justify-end gap-3">
               <button 
                 onClick={() => setSelectedTool(null)} 
-                className="px-5 py-2.5 text-sm font-medium text-slate-300 hover:text-white transition-colors"
+                className="px-5 py-2.5 text-sm font-medium text-slate-700 dark:text-slate-300 hover:text-slate-800 dark:text-white transition-colors"
                 disabled={launchingTool === selectedTool.id}
               >
                 Cancel

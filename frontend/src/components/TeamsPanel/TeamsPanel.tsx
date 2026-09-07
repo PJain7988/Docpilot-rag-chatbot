@@ -15,14 +15,14 @@ export const TeamsPanel = () => {
   ];
 
   return (
-    <div className="flex-1 flex flex-col h-full bg-slate-950 p-8 overflow-y-auto relative">
+    <div className="flex-1 flex flex-col h-full bg-slate-50 dark:bg-slate-950 p-8 overflow-y-auto relative">
       <div className="flex flex-col md:flex-row md:items-center justify-between mb-10 gap-4">
         <div>
-          <h1 className="text-3xl font-bold text-white mb-2 flex items-center gap-3">
+          <h1 className="text-3xl font-bold text-slate-800 dark:text-white mb-2 flex items-center gap-3">
             <Users className="text-cyan-500" size={32} />
             Team Management
           </h1>
-          <p className="text-slate-400 text-sm">Manage workspace members and their access controls.</p>
+          <p className="text-slate-500 dark:text-slate-400 text-sm">Manage workspace members and their access controls.</p>
         </div>
         <button 
           onClick={() => setIsInviteModalOpen(true)}
@@ -33,9 +33,9 @@ export const TeamsPanel = () => {
         </button>
       </div>
 
-      <div className="flex-1 bg-slate-900 border border-slate-800 rounded-2xl overflow-x-auto flex flex-col max-w-5xl shadow-2xl">
+      <div className="flex-1 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl overflow-x-auto flex flex-col max-w-5xl shadow-2xl">
         <div className="min-w-[800px] flex flex-col h-full">
-          <div className="grid grid-cols-12 gap-4 p-5 border-b border-slate-800 bg-slate-850/80 text-xs font-semibold text-slate-400 uppercase tracking-wider">
+          <div className="grid grid-cols-12 gap-4 p-5 border-b border-slate-200 dark:border-slate-800 bg-slate-850/80 text-xs font-semibold text-slate-500 dark:text-slate-400 uppercase tracking-wider">
           <div className="col-span-4 pl-2">User</div>
           <div className="col-span-3">Email</div>
           <div className="col-span-2">Role</div>
@@ -45,28 +45,28 @@ export const TeamsPanel = () => {
         
         <div className="flex-1 overflow-y-auto divide-y divide-slate-800/50">
           {members.map((member) => (
-            <div key={member.id} className="grid grid-cols-12 gap-4 p-5 items-center hover:bg-slate-850/50 transition-colors group">
+            <div key={member.id} className="grid grid-cols-12 gap-4 p-5 items-center hover:bg-slate-100 dark:bg-slate-850/50 transition-colors group">
               
               <div className="col-span-4 flex items-center gap-4">
                 <div className="w-10 h-10 rounded-full bg-slate-700 flex items-center justify-center overflow-hidden border border-slate-600 shrink-0">
                   {member.avatar ? (
                     <img src={member.avatar} alt={member.name} className="w-full h-full object-cover" />
                   ) : (
-                    <span className="text-slate-400 font-medium">{member.name.charAt(0)}</span>
+                    <span className="text-slate-500 dark:text-slate-400 font-medium">{member.name.charAt(0)}</span>
                   )}
                 </div>
                 <div>
-                  <div className="text-sm font-semibold text-slate-200 group-hover:text-white transition-colors">{member.name}</div>
+                  <div className="text-sm font-semibold text-slate-900 dark:text-slate-200 group-hover:text-slate-800 dark:text-white transition-colors">{member.name}</div>
                 </div>
               </div>
               
-              <div className="col-span-3 text-sm text-slate-400 truncate pr-4">{member.email}</div>
+              <div className="col-span-3 text-sm text-slate-500 dark:text-slate-400 truncate pr-4">{member.email}</div>
               
               <div className="col-span-2 flex items-center gap-2">
                 <Shield size={14} className={clsx(
-                  member.role === 'Admin' ? 'text-purple-400' : member.role === 'Editor' ? 'text-cyan-400' : 'text-slate-400'
+                  member.role === 'Admin' ? 'text-purple-400' : member.role === 'Editor' ? 'text-cyan-400' : 'text-slate-500 dark:text-slate-400'
                 )} />
-                <span className="text-sm text-slate-300 font-medium">{member.role}</span>
+                <span className="text-sm text-slate-700 dark:text-slate-300 font-medium">{member.role}</span>
               </div>
               
               <div className="col-span-2">
@@ -78,10 +78,10 @@ export const TeamsPanel = () => {
                 </span>
               </div>
               
-              <div className="col-span-1 flex items-center justify-end pr-2 text-slate-500">
+              <div className="col-span-1 flex items-center justify-end pr-2 text-slate-400 dark:text-slate-500">
                 <button 
                   onClick={() => alert(`Manage settings for ${member.name}`)}
-                  className="p-1.5 hover:text-cyan-400 hover:bg-slate-800 rounded-md transition-all"
+                  className="p-1.5 hover:text-cyan-400 hover:bg-slate-100 dark:bg-slate-800 rounded-md transition-all"
                 >
                   <MoreVertical size={16} />
                 </button>
@@ -93,10 +93,10 @@ export const TeamsPanel = () => {
       </div>
       {/* Invite Member Modal */}
       {isInviteModalOpen && (
-        <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-slate-950/80 backdrop-blur-sm animate-in fade-in duration-200">
-          <div className="bg-slate-900 border border-slate-700 rounded-2xl w-full max-w-md shadow-2xl overflow-hidden flex flex-col animate-in slide-in-from-bottom-4 duration-300">
-            <div className="flex justify-between items-center p-6 border-b border-slate-800 bg-slate-850/50">
-              <h2 className="text-xl font-bold text-white flex items-center gap-3">
+        <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-slate-50 dark:bg-slate-950/80 backdrop-blur-sm animate-in fade-in duration-200">
+          <div className="bg-white dark:bg-slate-900 border border-slate-300 dark:border-slate-700 rounded-2xl w-full max-w-md shadow-2xl overflow-hidden flex flex-col animate-in slide-in-from-bottom-4 duration-300">
+            <div className="flex justify-between items-center p-6 border-b border-slate-200 dark:border-slate-800 bg-slate-100 dark:bg-slate-850/50">
+              <h2 className="text-xl font-bold text-slate-800 dark:text-white flex items-center gap-3">
                 <div className="w-8 h-8 rounded-lg flex items-center justify-center bg-cyan-500/10 text-cyan-400">
                   <UserPlus size={18} />
                 </div>
@@ -104,29 +104,29 @@ export const TeamsPanel = () => {
               </h2>
               <button 
                 onClick={() => setIsInviteModalOpen(false)} 
-                className="text-slate-400 hover:text-white transition-colors bg-slate-800 hover:bg-slate-700 p-1.5 rounded-lg"
+                className="text-slate-500 dark:text-slate-400 hover:text-slate-800 dark:text-white transition-colors bg-slate-100 dark:bg-slate-800 hover:bg-slate-700 p-1.5 rounded-lg"
               >
                 <X size={20} />
               </button>
             </div>
             
             <div className="p-6">
-              <p className="text-slate-400 mb-6 text-sm leading-relaxed">Send an invitation email to add a new member to this workspace.</p>
+              <p className="text-slate-500 dark:text-slate-400 mb-6 text-sm leading-relaxed">Send an invitation email to add a new member to this workspace.</p>
               
               <div className="space-y-5">
                 <div>
-                  <label className="block text-sm font-medium text-slate-300 mb-2">Email Address</label>
+                  <label className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-2">Email Address</label>
                   <input 
                     type="email" 
                     placeholder="colleague@company.com"
                     value={inviteEmail}
                     onChange={(e) => setInviteEmail(e.target.value)}
-                    className="w-full bg-slate-950 border border-slate-700 rounded-xl p-3 text-sm text-slate-200 outline-none focus:border-cyan-500 transition-colors"
+                    className="w-full bg-slate-50 dark:bg-slate-950 border border-slate-300 dark:border-slate-700 rounded-xl p-3 text-sm text-slate-900 dark:text-slate-200 outline-none focus:border-cyan-500 transition-colors"
                   />
                 </div>
                 <div>
-                  <label className="block text-sm font-medium text-slate-300 mb-2">Role & Permissions</label>
-                  <select className="w-full bg-slate-950 border border-slate-700 rounded-xl p-3 text-sm text-slate-200 outline-none focus:border-cyan-500 transition-colors">
+                  <label className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-2">Role & Permissions</label>
+                  <select className="w-full bg-slate-50 dark:bg-slate-950 border border-slate-300 dark:border-slate-700 rounded-xl p-3 text-sm text-slate-900 dark:text-slate-200 outline-none focus:border-cyan-500 transition-colors">
                     <option>Viewer (Read-only)</option>
                     <option>Editor (Can modify documents)</option>
                     <option>Admin (Full access)</option>
@@ -135,10 +135,10 @@ export const TeamsPanel = () => {
               </div>
             </div>
 
-            <div className="p-6 border-t border-slate-800 bg-slate-850/50 flex justify-end gap-3">
+            <div className="p-6 border-t border-slate-200 dark:border-slate-800 bg-slate-100 dark:bg-slate-850/50 flex justify-end gap-3">
               <button 
                 onClick={() => setIsInviteModalOpen(false)} 
-                className="px-5 py-2.5 text-sm font-medium text-slate-300 hover:text-white transition-colors"
+                className="px-5 py-2.5 text-sm font-medium text-slate-700 dark:text-slate-300 hover:text-slate-800 dark:text-white transition-colors"
                 disabled={isInviting}
               >
                 Cancel

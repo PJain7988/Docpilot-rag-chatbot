@@ -88,54 +88,54 @@ export const MainPanel = () => {
   };
 
   return (
-    <div className="flex-1 flex flex-col h-full bg-slate-950 p-6 overflow-y-auto md:overflow-hidden">
+    <div className="flex-1 flex flex-col h-full bg-slate-50 dark:bg-slate-950 p-6 overflow-y-auto md:overflow-hidden">
       
       {/* Top Navigation */}
       <div className="flex items-center justify-between mb-6">
-        <div className="text-slate-400 text-sm font-medium flex items-center gap-2">
-          <span>Workspace: <span className="text-white">Alpha</span></span>
+        <div className="text-slate-500 dark:text-slate-400 text-sm font-medium flex items-center gap-2">
+          <span>Workspace: <span className="text-slate-800 dark:text-white">Alpha</span></span>
           <span className="text-slate-600">|</span>
-          <span>Project: <span className="text-white">Security Audit Q3</span></span>
+          <span>Project: <span className="text-slate-800 dark:text-white">Security Audit Q3</span></span>
         </div>
         <div className="flex items-center gap-4">
-          <Search size={18} className="text-slate-400 cursor-pointer hover:text-white transition-colors" />
-          <Bell size={18} className="text-slate-400 cursor-pointer hover:text-white transition-colors" />
+          <Search size={18} className="text-slate-500 dark:text-slate-400 cursor-pointer hover:text-slate-800 dark:text-white transition-colors" />
+          <Bell size={18} className="text-slate-500 dark:text-slate-400 cursor-pointer hover:text-slate-800 dark:text-white transition-colors" />
         </div>
       </div>
 
       {/* Main Content Area */}
-      <div className="flex-1 flex flex-col min-h-0 bg-slate-900 border border-slate-800 rounded-xl overflow-visible md:overflow-hidden shadow-2xl">
+      <div className="flex-1 flex flex-col min-h-0 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl overflow-visible md:overflow-hidden shadow-2xl">
         
         {isLoading ? (
           <div className="flex-1 flex items-center justify-center">
             <Loader2 size={32} className="text-cyan-500 animate-spin" />
           </div>
         ) : !latestDoc ? (
-          <div className="flex-1 flex flex-col items-center justify-center text-slate-500">
-            <h2 className="text-xl font-bold text-slate-300 mb-2">No Documents Uploaded</h2>
-            <p className="text-sm text-slate-400">Head over to the "My Documents" tab to upload your first document.</p>
+          <div className="flex-1 flex flex-col items-center justify-center text-slate-400 dark:text-slate-500">
+            <h2 className="text-xl font-bold text-slate-700 dark:text-slate-300 mb-2">No Documents Uploaded</h2>
+            <p className="text-sm text-slate-500 dark:text-slate-400">Head over to the "My Documents" tab to upload your first document.</p>
           </div>
         ) : (
           <>
             {/* Document Header */}
-            <div className="p-5 border-b border-slate-800 flex flex-col shrink-0 bg-slate-850/50">
+            <div className="p-5 border-b border-slate-200 dark:border-slate-800 flex flex-col shrink-0 bg-slate-100 dark:bg-slate-850/50">
               <h1 className="text-lg font-semibold text-slate-100 mb-1">{latestDoc.filename}</h1>
-              <div className="text-xs text-slate-400">
+              <div className="text-xs text-slate-500 dark:text-slate-400">
                 Doc ID: {latestDoc.id} | Uploaded: {new Date(latestDoc.uploaded_at || Date.now()).toLocaleDateString()}
               </div>
             </div>
 
             {/* Document Viewer (Placeholder Grid) */}
-            <div className="flex-1 p-6 overflow-visible md:overflow-y-auto relative bg-slate-950/50">
+            <div className="flex-1 p-6 overflow-visible md:overflow-y-auto relative bg-slate-50 dark:bg-slate-950/50">
               {/* Toolbar */}
-              <div className="absolute top-4 right-6 flex items-center gap-2 bg-slate-800/80 backdrop-blur border border-slate-700 p-1.5 rounded-lg z-10 text-slate-400">
-                <button onClick={() => setZoom(z => Math.max(z - 0.2, 0.5))} className="p-1 hover:text-white hover:bg-slate-700 rounded transition-colors"><ZoomOut size={16} /></button>
-                <button onClick={() => setZoom(z => Math.min(z + 0.2, 2))} className="p-1 hover:text-white hover:bg-slate-700 rounded transition-colors"><ZoomIn size={16} /></button>
-                <button onClick={handleDownload} className="p-1 hover:text-white hover:bg-slate-700 rounded transition-colors"><Download size={16} /></button>
-                <button onClick={handleShare} className="p-1 hover:text-white hover:bg-slate-700 rounded transition-colors"><Share size={16} /></button>
+              <div className="absolute top-4 right-6 flex items-center gap-2 bg-slate-100 dark:bg-slate-800/80 backdrop-blur border border-slate-300 dark:border-slate-700 p-1.5 rounded-lg z-10 text-slate-500 dark:text-slate-400">
+                <button onClick={() => setZoom(z => Math.max(z - 0.2, 0.5))} className="p-1 hover:text-slate-800 dark:text-white hover:bg-slate-700 rounded transition-colors"><ZoomOut size={16} /></button>
+                <button onClick={() => setZoom(z => Math.min(z + 0.2, 2))} className="p-1 hover:text-slate-800 dark:text-white hover:bg-slate-700 rounded transition-colors"><ZoomIn size={16} /></button>
+                <button onClick={handleDownload} className="p-1 hover:text-slate-800 dark:text-white hover:bg-slate-700 rounded transition-colors"><Download size={16} /></button>
+                <button onClick={handleShare} className="p-1 hover:text-slate-800 dark:text-white hover:bg-slate-700 rounded transition-colors"><Share size={16} /></button>
               </div>
 
-              <div className="text-xs text-slate-500 mb-4">Previewing content...</div>
+              <div className="text-xs text-slate-400 dark:text-slate-500 mb-4">Previewing content...</div>
           
           <div 
             className="grid grid-cols-1 md:grid-cols-2 gap-4 max-w-4xl mx-auto opacity-90 hover:opacity-100 transition-transform origin-top duration-300"
@@ -223,26 +223,26 @@ export const MainPanel = () => {
         </div>
 
         {/* Bottom Metadata & Stats */}
-        <div className="shrink-0 flex flex-col border-t border-slate-800 bg-slate-850">
+        <div className="shrink-0 flex flex-col border-t border-slate-200 dark:border-slate-800 bg-slate-850">
           
             {/* Document Metadata */}
-            <div className="p-4 border-b border-slate-800/50 flex flex-col">
-              <h3 className="text-sm font-medium text-slate-300 mb-3">Document Metadata</h3>
+            <div className="p-4 border-b border-slate-200 dark:border-slate-800/50 flex flex-col">
+              <h3 className="text-sm font-medium text-slate-700 dark:text-slate-300 mb-3">Document Metadata</h3>
               <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
                 <div>
-                  <div className="text-xs text-slate-500 mb-1">Size</div>
-                  <div className="text-sm text-slate-200">{formatSize(latestDoc.file_size)}</div>
+                  <div className="text-xs text-slate-400 dark:text-slate-500 mb-1">Size</div>
+                  <div className="text-sm text-slate-900 dark:text-slate-200">{formatSize(latestDoc.file_size)}</div>
                 </div>
                 <div>
-                  <div className="text-xs text-slate-500 mb-1">Type</div>
-                  <div className="text-sm text-slate-200 uppercase">{latestDoc.file_type}</div>
+                  <div className="text-xs text-slate-400 dark:text-slate-500 mb-1">Type</div>
+                  <div className="text-sm text-slate-900 dark:text-slate-200 uppercase">{latestDoc.file_type}</div>
                 </div>
                 <div>
-                  <div className="text-xs text-slate-500 mb-1">Uploaded By</div>
-                  <div className="text-sm text-slate-200 truncate">{latestDoc.owner_id.substring(0, 8)}...</div>
+                  <div className="text-xs text-slate-400 dark:text-slate-500 mb-1">Uploaded By</div>
+                  <div className="text-sm text-slate-900 dark:text-slate-200 truncate">{latestDoc.owner_id.substring(0, 8)}...</div>
                 </div>
                 <div>
-                  <div className="text-xs text-slate-500 mb-1">Status</div>
+                  <div className="text-xs text-slate-400 dark:text-slate-500 mb-1">Status</div>
                   <div className={`text-sm ${latestDoc.status === 'READY' ? 'text-emerald-400' : latestDoc.status === 'FAILED' ? 'text-red-400' : 'text-cyan-400'}`}>
                     {latestDoc.status}
                   </div>

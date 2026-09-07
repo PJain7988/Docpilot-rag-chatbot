@@ -34,14 +34,14 @@ export const Layout = () => {
   };
 
   return (
-    <div className="flex h-screen w-screen overflow-hidden bg-slate-950 font-sans relative">
+    <div className="flex h-screen w-screen overflow-hidden bg-white dark:bg-slate-950 font-sans relative transition-colors duration-300">
       {/* Mobile Topbar */}
-      <div className="md:hidden absolute top-0 left-0 w-full h-14 bg-slate-900 border-b border-slate-800 flex items-center justify-between px-4 z-40">
-        <button onClick={() => setIsSidebarOpen(true)} className="text-slate-400 hover:text-white">
+      <div className="md:hidden absolute top-0 left-0 w-full h-14 bg-slate-50 dark:bg-slate-900 border-b border-slate-200 dark:border-slate-800 flex items-center justify-between px-4 z-40 transition-colors duration-300">
+        <button onClick={() => setIsSidebarOpen(true)} className="text-slate-500 hover:text-slate-900 dark:text-slate-400 dark:hover:text-white transition-colors">
           <Menu size={24} />
         </button>
-        <span className="font-bold text-white text-lg">DocPilot</span>
-        <button onClick={() => setIsChatOpen(!isChatOpen)} className="text-cyan-500 hover:text-cyan-400">
+        <span className="font-bold text-slate-900 dark:text-white text-lg transition-colors">DocPilot</span>
+        <button onClick={() => setIsChatOpen(!isChatOpen)} className="text-cyan-600 dark:text-cyan-500 hover:text-cyan-500 dark:hover:text-cyan-400 transition-colors">
           <MessageSquare size={24} />
         </button>
       </div>
