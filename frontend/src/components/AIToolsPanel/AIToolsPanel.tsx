@@ -123,7 +123,7 @@ export const AIToolsPanel = () => {
             <p className="text-sm text-slate-400 leading-relaxed mb-8 flex-1">
               {tool.description}
             </p>
-            
+            <div className="flex items-center text-sm font-semibold transition-colors mt-auto">
               <span className="text-slate-500 group-hover:text-cyan-400 transition-colors">Configure & Launch</span>
               <ChevronRight size={16} className="ml-1 text-slate-500 group-hover:text-cyan-400 group-hover:translate-x-1 transition-all" />
             </div>
