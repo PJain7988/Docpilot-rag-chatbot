@@ -1,9 +1,18 @@
 import { useState } from 'react';
-import { Cpu, FileText, Bot, BarChart3, ChevronRight, Zap, Filter } from 'lucide-react';
+import { Cpu, FileText, Bot, BarChart3, ChevronRight, Zap, Filter, Loader2 } from 'lucide-react';
 import { clsx } from 'clsx';
 
 export const AIToolsPanel = () => {
   const [activeFilter, setActiveFilter] = useState('All');
+  const [launchingTool, setLaunchingTool] = useState<number | null>(null);
+
+  const handleLaunch = (toolId: number) => {
+    if (launchingTool) return;
+    setLaunchingTool(toolId);
+    setTimeout(() => {
+      setLaunchingTool(null);
+    }, 2000);
+  };
   const tools = [
     {
       id: 1,
@@ -90,7 +99,7 @@ export const AIToolsPanel = () => {
         {filteredTools.map((tool) => (
           <div 
             key={tool.id} 
-            onClick={() => alert(`Launching ${tool.title} workflow...`)}
+            onClick={() => handleLaunch(tool.id)}
             className={clsx(
             "group bg-slate-900 border border-slate-800 rounded-2xl p-6 transition-all duration-300 cursor-pointer flex flex-col",
             tool.border,
@@ -113,8 +122,15 @@ export const AIToolsPanel = () => {
               {tool.description}
             </p>
             
-            <div className="flex items-center text-sm font-semibold text-slate-500 group-hover:text-cyan-400 transition-colors mt-auto">
-              Launch Workflow <ChevronRight size={16} className="ml-1 group-hover:translate-x-1 transition-transform" />
+            <div className={clsx(
+              "flex items-center text-sm font-semibold transition-colors mt-auto",
+              launchingTool === tool.id ? "text-cyan-400" : "text-slate-500 group-hover:text-cyan-400"
+            )}>
+              {launchingTool === tool.id ? (
+                <>Launching <Loader2 size={16} className="ml-2 animate-spin" /></>
+              ) : (
+                <>Launch Workflow <ChevronRight size={16} className="ml-1 group-hover:translate-x-1 transition-transform" /></>
+              )}
             </div>
           </div>
         ))}
