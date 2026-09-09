@@ -10,7 +10,7 @@ class VectorStore:
             # test connection
             self.client.get_collections()
         except Exception:
-            self.client = QdrantClient(path=":memory:") # Use memory for local dev if qdrant is down
+            self.client = QdrantClient(path="local_qdrant") # Use disk for local dev if qdrant is down
             
         self.collection_name = "intellirag_docs"
         self._ensure_collection()
