@@ -68,7 +68,7 @@ export const SettingsPanel = () => {
                         onClick={() => {
                           const newState = !isOpenAIEnabled;
                           setIsOpenAIEnabled(newState);
-                          if (newState) setIsGeminiEnabled(false);
+                          setIsGeminiEnabled(!newState);
                         }}
                         className={clsx(
                           "h-6 w-12 rounded-full relative cursor-pointer transition-colors duration-300",
@@ -137,7 +137,7 @@ export const SettingsPanel = () => {
                         onClick={() => {
                           const newState = !isGeminiEnabled;
                           setIsGeminiEnabled(newState);
-                          if (newState) setIsOpenAIEnabled(false);
+                          setIsOpenAIEnabled(!newState);
                         }}
                         className={clsx(
                           "h-6 w-12 rounded-full relative cursor-pointer transition-colors duration-300",
