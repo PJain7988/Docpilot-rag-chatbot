@@ -58,14 +58,18 @@ export const SettingsPanel = () => {
             {activeMenu === 'LLM Providers' && (
               <div className="space-y-8 animate-in fade-in slide-in-from-bottom-4 duration-500">
                 
-                <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl p-6 shadow-xl">
+                <div className={clsx("bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl p-6 shadow-xl transition-opacity", !isOpenAIEnabled && "opacity-60 hover:opacity-100")}>
                   <div className="flex items-center justify-between mb-6 border-b border-slate-200 dark:border-slate-800 pb-4">
                     <div>
                       <h3 className="text-lg font-semibold text-slate-800 dark:text-white">OpenAI Integration</h3>
                       <p className="text-xs text-slate-500 dark:text-slate-400 mt-1">Used for high-accuracy reasoning and generation tasks.</p>
                     </div>
                       <div 
-                        onClick={() => setIsOpenAIEnabled(!isOpenAIEnabled)}
+                        onClick={() => {
+                          const newState = !isOpenAIEnabled;
+                          setIsOpenAIEnabled(newState);
+                          if (newState) setIsGeminiEnabled(false);
+                        }}
                         className={clsx(
                           "h-6 w-12 rounded-full relative cursor-pointer transition-colors duration-300",
                           isOpenAIEnabled ? "bg-cyan-600 shadow-[0_0_15px_rgba(6,182,212,0.5)]" : "bg-slate-700"
@@ -78,19 +82,29 @@ export const SettingsPanel = () => {
                       </div>
                   </div>
                   
-                  <div className="space-y-4">
+                  <div className={clsx("space-y-4", !isOpenAIEnabled && "pointer-events-none")}>
                     <div>
                       <label className="block text-xs font-semibold text-slate-500 dark:text-slate-400 uppercase tracking-wider mb-2">API Key</label>
                       <input 
                         type="password" 
                         defaultValue="sk-................................................" 
-                        className="w-full bg-slate-50 dark:bg-slate-950 border border-slate-300 dark:border-slate-700 text-slate-700 dark:text-slate-300 rounded-xl px-4 py-3 focus:border-cyan-500 focus:outline-none transition-colors font-mono text-sm"
+                        disabled={!isOpenAIEnabled}
+                        className={clsx(
+                          "w-full bg-slate-50 dark:bg-slate-950 border border-slate-300 dark:border-slate-700 text-slate-700 dark:text-slate-300 rounded-xl px-4 py-3 focus:border-cyan-500 focus:outline-none transition-colors font-mono text-sm",
+                          !isOpenAIEnabled && "opacity-50 cursor-not-allowed"
+                        )}
                       />
                     </div>
                     <div className="grid grid-cols-2 gap-4">
                       <div>
                         <label className="block text-xs font-semibold text-slate-500 dark:text-slate-400 uppercase tracking-wider mb-2">Primary Model</label>
-                        <select className="w-full bg-slate-50 dark:bg-slate-950 border border-slate-300 dark:border-slate-700 text-slate-700 dark:text-slate-300 rounded-xl px-4 py-3 focus:border-cyan-500 focus:outline-none transition-colors appearance-none">
+                        <select 
+                          disabled={!isOpenAIEnabled}
+                          className={clsx(
+                            "w-full bg-slate-50 dark:bg-slate-950 border border-slate-300 dark:border-slate-700 text-slate-700 dark:text-slate-300 rounded-xl px-4 py-3 focus:border-cyan-500 focus:outline-none transition-colors appearance-none",
+                            !isOpenAIEnabled && "opacity-50 cursor-not-allowed"
+                          )}
+                        >
                           <option>gpt-4o</option>
                           <option>gpt-4-turbo</option>
                           <option>gpt-3.5-turbo</option>
@@ -102,21 +116,29 @@ export const SettingsPanel = () => {
                           type="number" 
                           defaultValue={0.2}
                           step={0.1}
-                          className="w-full bg-slate-50 dark:bg-slate-950 border border-slate-300 dark:border-slate-700 text-slate-700 dark:text-slate-300 rounded-xl px-4 py-3 focus:border-cyan-500 focus:outline-none transition-colors"
+                          disabled={!isOpenAIEnabled}
+                          className={clsx(
+                            "w-full bg-slate-50 dark:bg-slate-950 border border-slate-300 dark:border-slate-700 text-slate-700 dark:text-slate-300 rounded-xl px-4 py-3 focus:border-cyan-500 focus:outline-none transition-colors",
+                            !isOpenAIEnabled && "opacity-50 cursor-not-allowed"
+                          )}
                         />
                       </div>
                     </div>
                   </div>
                 </div>
 
-                <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl p-6 shadow-xl opacity-60 hover:opacity-100 transition-opacity">
+                <div className={clsx("bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl p-6 shadow-xl transition-opacity", !isGeminiEnabled && "opacity-60 hover:opacity-100")}>
                   <div className="flex items-center justify-between mb-6 border-b border-slate-200 dark:border-slate-800 pb-4">
                     <div>
                       <h3 className="text-lg font-semibold text-slate-800 dark:text-white">Google Gemini</h3>
                       <p className="text-xs text-slate-500 dark:text-slate-400 mt-1">Alternative provider for multimodal capabilities.</p>
                     </div>
                       <div 
-                        onClick={() => setIsGeminiEnabled(!isGeminiEnabled)}
+                        onClick={() => {
+                          const newState = !isGeminiEnabled;
+                          setIsGeminiEnabled(newState);
+                          if (newState) setIsOpenAIEnabled(false);
+                        }}
                         className={clsx(
                           "h-6 w-12 rounded-full relative cursor-pointer transition-colors duration-300",
                           isGeminiEnabled ? "bg-cyan-600 shadow-[0_0_15px_rgba(6,182,212,0.5)]" : "bg-slate-700"
@@ -128,14 +150,17 @@ export const SettingsPanel = () => {
                         )}></div>
                       </div>
                   </div>
-                  <div className="space-y-4 pointer-events-none">
+                  <div className={clsx("space-y-4", !isGeminiEnabled && "pointer-events-none")}>
                     <div>
                       <label className="block text-xs font-semibold text-slate-500 dark:text-slate-400 uppercase tracking-wider mb-2">API Key</label>
                       <input 
                         type="password" 
                         placeholder="Enter API Key" 
-                        className="w-full bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 text-slate-500 rounded-xl px-4 py-3"
-                        disabled
+                        disabled={!isGeminiEnabled}
+                        className={clsx(
+                          "w-full bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 text-slate-500 rounded-xl px-4 py-3 transition-colors",
+                          !isGeminiEnabled && "opacity-50 cursor-not-allowed"
+                        )}
                       />
                     </div>
                   </div>
