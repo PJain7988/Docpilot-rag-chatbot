@@ -4,21 +4,24 @@ from .config import settings
 
 class VectorStore:
     def __init__(self):
-        # Fallback to local memory/disk if QDRANT_URL is not provided or fails to connect
-        try:
-            self.client = QdrantClient(url=settings.QDRANT_URL)
-            # test connection
-            self.client.get_collections()
-        except Exception:
-            self.client = QdrantClient(path="local_qdrant") # Use disk for local dev if qdrant is down
-            
+        self._client = None
         self.collection_name = "intellirag_docs"
-        self._ensure_collection()
+        
+    @property
+    def client(self):
+        if self._client is None:
+            try:
+                self._client = QdrantClient(url=settings.QDRANT_URL)
+                self._client.get_collections()
+            except Exception:
+                self._client = QdrantClient(path="local_qdrant")
+            self._ensure_collection()
+        return self._client
 
     def _ensure_collection(self):
-        collections = self.client.get_collections().collections
+        collections = self._client.get_collections().collections
         if not any(c.name == self.collection_name for c in collections):
-            self.client.create_collection(
+            self._client.create_collection(
                 collection_name=self.collection_name,
                 vectors_config=VectorParams(size=384, distance=Distance.COSINE), # 384 for all-MiniLM-L6-v2
             )
