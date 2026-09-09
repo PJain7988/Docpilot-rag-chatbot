@@ -155,10 +155,10 @@ export const SettingsPanel = () => {
                       <label className="block text-xs font-semibold text-slate-500 dark:text-slate-400 uppercase tracking-wider mb-2">API Key</label>
                       <input 
                         type="password" 
-                        placeholder="Enter API Key" 
+                        defaultValue="AIzaSy...................................." 
                         disabled={!isGeminiEnabled}
                         className={clsx(
-                          "w-full bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 text-slate-500 rounded-xl px-4 py-3 transition-colors",
+                          "w-full bg-slate-50 dark:bg-slate-950 border border-slate-300 dark:border-slate-700 text-slate-700 dark:text-slate-300 rounded-xl px-4 py-3 transition-colors font-mono text-sm",
                           !isGeminiEnabled && "opacity-50 cursor-not-allowed"
                         )}
                       />
