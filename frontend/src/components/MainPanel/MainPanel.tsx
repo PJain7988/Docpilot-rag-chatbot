@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { Search, Bell, ZoomIn, ZoomOut, Download, Share, Loader2 } from 'lucide-react';
+import { ZoomIn, ZoomOut, Download, Share, Loader2 } from 'lucide-react';
 import { AreaChart, Area, ResponsiveContainer } from 'recharts';
 import { api, type Document } from '../../services/api';
 
@@ -97,10 +97,7 @@ export const MainPanel = () => {
           <span className="text-slate-600">|</span>
           <span>Project: <span className="text-slate-800 dark:text-white">Security Audit Q3</span></span>
         </div>
-        <div className="flex items-center gap-4">
-          <Search size={18} className="text-slate-500 dark:text-slate-400 cursor-pointer hover:text-slate-800 dark:text-white transition-colors" />
-          <Bell size={18} className="text-slate-500 dark:text-slate-400 cursor-pointer hover:text-slate-800 dark:text-white transition-colors" />
-        </div>
+        {/* Placeholder for future top-right actions */}
       </div>
 
       {/* Main Content Area */}
