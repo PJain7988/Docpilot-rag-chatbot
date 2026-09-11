@@ -38,3 +38,12 @@ app.include_router(chat_router, prefix=f"{settings.API_V1_STR}/chat", tags=["Cha
 @app.get("/api/health", tags=["Health"])
 def health_check():
     return {"status": "ok"}
+
+@app.get("/api/debug/qdrant", tags=["Debug"])
+def debug_qdrant():
+    from app.core.vector_store import vector_store
+    try:
+        count = vector_store.client.get_collection("intellirag_docs").points_count
+        return {"points_count": count}
+    except Exception as e:
+        return {"error": str(e)}

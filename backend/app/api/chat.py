@@ -1,6 +1,6 @@
 from fastapi import APIRouter, Depends, HTTPException
 from pydantic import BaseModel
-from typing import List, Dict, Any, Optional
+from typing import List, Dict, Any, Optional, Union
 from ..models.user import User
 from .deps import get_current_user
 from ..rag.retriever import retriever
@@ -18,7 +18,7 @@ class ChatRequest(BaseModel):
 class Citation(BaseModel):
     id: int
     document: str
-    page: str
+    page: Union[str, int]
     text_snippet: str
 
 class ChatResponse(BaseModel):
@@ -50,5 +50,7 @@ async def chat_endpoint(
             citations=citations
         )
     except Exception as e:
-        logger.error(f"Chat error: {e}")
-        raise HTTPException(status_code=500, detail="Internal server error during chat processing")
+        import traceback
+        error_details = traceback.format_exc()
+        logger.error(f"Chat error: {error_details}")
+        raise HTTPException(status_code=500, detail=f"Internal server error: {error_details}")
