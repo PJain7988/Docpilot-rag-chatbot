@@ -179,8 +179,12 @@ export const SettingsPanel = () => {
                 <div className="flex justify-end pt-4">
                   <button 
                     onClick={() => {
+                      if (isGeminiEnabled && !geminiKey.trim()) {
+                        alert("Please enter a valid Gemini API Key before saving!");
+                        return;
+                      }
                       localStorage.setItem('llm_provider', isGeminiEnabled ? 'gemini' : 'openai');
-                      localStorage.setItem('gemini_api_key', geminiKey);
+                      localStorage.setItem('gemini_api_key', geminiKey.trim());
                       setSuccessMessage("Settings saved successfully!");
                       setTimeout(() => setSuccessMessage(null), 3000);
                     }}
