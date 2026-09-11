@@ -24,15 +24,17 @@ export interface Document {
 
 export const api = {
   chat: async (query: string): Promise<ChatResponse> => {
-    // We are mocking authentication for the UI showcase by passing a dummy token or no token.
-    // In a real app, you would retrieve the JWT from localStorage and attach it to the headers.
-    
     try {
+      const provider = localStorage.getItem('llm_provider') || 'openai';
+      const geminiKey = localStorage.getItem('gemini_api_key') || '';
+
       const response = await fetch(`${API_URL}/chat/`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
-          'Authorization': `Bearer TEST_TOKEN`
+          'Authorization': `Bearer TEST_TOKEN`,
+          'X-LLM-Provider': provider,
+          'X-Gemini-Api-Key': geminiKey
         },
         body: JSON.stringify({ query }),
       });

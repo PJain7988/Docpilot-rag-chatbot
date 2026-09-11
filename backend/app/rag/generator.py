@@ -15,7 +15,7 @@ class Generator:
             self.model = None
             logger.warning("GEMINI_API_KEY not set. Generation will be mocked.")
 
-    async def generate_answer(self, query: str, context_chunks: List[Dict[str, Any]]) -> Tuple[str, List[Dict[str, Any]]]:
+    async def generate_answer(self, query: str, context_chunks: List[Dict[str, Any]], api_key: str = None, provider: str = None) -> Tuple[str, List[Dict[str, Any]]]:
         if not context_chunks:
             return "[DEBUG: Qdrant returned 0 chunks!] I couldn't find sufficient information in the knowledge base.", []
 
@@ -52,15 +52,27 @@ Keep answers concise but sufficiently detailed.
 User Question: {query}
 Answer:"""
 
-        if not self.model:
+        # Initialize model dynamically based on provided key, or fallback to default
+        model = self.model
+        if provider == "gemini" and api_key:
+            try:
+                genai.configure(api_key=api_key)
+                model = genai.GenerativeModel('gemini-1.5-pro')
+            except Exception as e:
+                logger.error(f"Error configuring dynamic Gemini API key: {e}")
+        elif provider == "openai":
+            # For this MVP, we haven't implemented OpenAI completely, so we'll just mock it or say it's coming soon.
+            return f"OpenAI integration is configured, but not fully implemented in the backend yet! Your API key is safe.", valid_citations[:1]
+
+        if not model:
             # Mock response for testing UI without API key
             return f"This is a mocked answer because GEMINI_API_KEY is not set. Based on the retrieved context, the answer is related to the query '{query}'. According to the documentation [Source 1], this is how the system behaves.", valid_citations[:1]
 
         try:
-            response = await self.model.generate_content_async(prompt)
+            response = await model.generate_content_async(prompt)
             return response.text, valid_citations
         except Exception as e:
             logger.error(f"Error during LLM generation: {e}")
-            return "The AI service is temporarily unavailable. Please try again.", []
+            return f"The AI service failed: {e}", []
 
 generator = Generator()

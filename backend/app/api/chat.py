@@ -1,4 +1,4 @@
-from fastapi import APIRouter, Depends, HTTPException
+from fastapi import APIRouter, Depends, HTTPException, Request
 from pydantic import BaseModel
 from typing import List, Dict, Any, Optional, Union
 from ..models.user import User
@@ -28,6 +28,7 @@ class ChatResponse(BaseModel):
 @router.post("/", response_model=ChatResponse)
 async def chat_endpoint(
     request: ChatRequest,
+    request_obj: Request,
     current_user: User = Depends(get_current_user)
 ):
     try:
@@ -42,8 +43,17 @@ async def chat_endpoint(
         # 2. Rerank
         reranked_chunks = reranker.rerank(request.query, retrieved_chunks)
         
+        # Extract dynamic LLM settings
+        provider = request_obj.headers.get("x-llm-provider", "openai")
+        api_key = request_obj.headers.get("x-gemini-api-key", None)
+        
         # 3. Generate Answer
-        answer, citations = await generator.generate_answer(request.query, reranked_chunks)
+        answer, citations = await generator.generate_answer(
+            request.query, 
+            reranked_chunks,
+            api_key=api_key,
+            provider=provider
+        )
         
         return ChatResponse(
             answer=answer,

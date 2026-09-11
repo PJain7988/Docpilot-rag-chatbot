@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Settings, Key, Database, Shield, Monitor, Save, CheckCircle2, X } from 'lucide-react';
 import { clsx } from 'clsx';
 import { useTheme } from '../../contexts/ThemeContext';
@@ -10,6 +10,14 @@ export const SettingsPanel = () => {
   const [is2FA, setIs2FA] = useState(false);
   const [isOpenAIEnabled, setIsOpenAIEnabled] = useState(true);
   const [isGeminiEnabled, setIsGeminiEnabled] = useState(false);
+  const [geminiKey, setGeminiKey] = useState('');
+  
+  useEffect(() => {
+    const provider = localStorage.getItem('llm_provider') || 'openai';
+    setIsOpenAIEnabled(provider === 'openai');
+    setIsGeminiEnabled(provider === 'gemini');
+    setGeminiKey(localStorage.getItem('gemini_api_key') || '');
+  }, []);
   
   const menuItems = [
     { name: 'General', icon: Monitor },
@@ -155,7 +163,9 @@ export const SettingsPanel = () => {
                       <label className="block text-xs font-semibold text-slate-500 dark:text-slate-400 uppercase tracking-wider mb-2">API Key</label>
                       <input 
                         type="password" 
-                        defaultValue="AIzaSy...................................." 
+                        value={geminiKey}
+                        onChange={(e) => setGeminiKey(e.target.value)}
+                        placeholder="AIzaSy...................................." 
                         disabled={!isGeminiEnabled}
                         className={clsx(
                           "w-full bg-slate-50 dark:bg-slate-950 border border-slate-300 dark:border-slate-700 text-slate-700 dark:text-slate-300 rounded-xl px-4 py-3 transition-colors font-mono text-sm",
@@ -169,6 +179,8 @@ export const SettingsPanel = () => {
                 <div className="flex justify-end pt-4">
                   <button 
                     onClick={() => {
+                      localStorage.setItem('llm_provider', isGeminiEnabled ? 'gemini' : 'openai');
+                      localStorage.setItem('gemini_api_key', geminiKey);
                       setSuccessMessage("Settings saved successfully!");
                       setTimeout(() => setSuccessMessage(null), 3000);
                     }}
