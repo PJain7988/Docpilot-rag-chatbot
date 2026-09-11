@@ -10,7 +10,7 @@ class Generator:
         self.api_key = settings.GEMINI_API_KEY
         if self.api_key:
             genai.configure(api_key=self.api_key)
-            self.model = genai.GenerativeModel('gemini-1.5-flash')
+            self.model = genai.GenerativeModel('gemini-pro')
         else:
             self.model = None
             logger.warning("GEMINI_API_KEY not set. Generation will be mocked.")
@@ -54,7 +54,7 @@ Answer:"""
         if provider == "gemini" and api_key:
             try:
                 genai.configure(api_key=api_key)
-                model = genai.GenerativeModel('gemini-1.5-flash')
+                model = genai.GenerativeModel('gemini-pro')
             except Exception as e:
                 logger.error(f"Error configuring dynamic Gemini API key: {e}")
         elif provider == "openai":
